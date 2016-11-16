@@ -1,8 +1,10 @@
+package Puzzle;
+
 import java.util.List;
 
 /**
  * Created by Ty on 11/15/2016 at 4:39 PM.
- * A Puzzle is composed of Cells. It only knows how many cells exist and constrains what symbols may be used.
+ * A Puzzle.Puzzle is composed of Cells. It only knows how many cells exist and constrains what symbols may be used.
  */
 public class Puzzle {
 
