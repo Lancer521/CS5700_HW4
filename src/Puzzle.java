@@ -3,6 +3,7 @@ import java.util.List;
 
 /**
  * Created by Ty on 11/15/2016 at 4:39 PM.
+ *
  */
 public class Puzzle {
 
@@ -14,7 +15,7 @@ public class Puzzle {
 
     public int gridSize;
     public List<Character> symbols;
-    public int[][][] puzzle;
+    public char[][][] puzzle;
     public int result;
     public String outputFile;
     //TODO: consider storing solutions here
@@ -22,7 +23,7 @@ public class Puzzle {
     public Puzzle(int size, List<Character> symbols){
         gridSize = size;
         this.symbols = symbols;
-        puzzle = new int[size][size][size];
+        puzzle = new char[size][size][size];
     }
 
 }

@@ -6,10 +6,11 @@ import java.util.List;
 
 /**
  * Created by Ty on 11/15/2016 at 4:26 PM.
+ *
  */
 public class PuzzleIO {
 
-    public Puzzle getPuzzle(String inputFile) {
+    public static Puzzle getPuzzle(String inputFile) {
 
         Puzzle puzzle = null;
         String line;
@@ -25,13 +26,18 @@ public class PuzzleIO {
             if (line == null) return null;
             List<Character> list = new ArrayList<>();
             for (char c : line.toCharArray()) {
-                list.add(c);
+                if(c != ' '){
+                    list.add(c);
+                }
             }
 
             puzzle = new Puzzle(size, list);
 
             while ((line = br.readLine()) != null) {
-                rawPuzzle += line;
+                String[] array = line.split(" ");
+                for (String str : array) {
+                    rawPuzzle += str;
+                }
             }
 
             char[] rawPuzzleCharacters = rawPuzzle.toCharArray();
