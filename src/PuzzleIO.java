@@ -6,7 +6,6 @@ import java.util.List;
 
 /**
  * Created by Ty on 11/15/2016 at 4:26 PM.
- *
  */
 public class PuzzleIO {
 
