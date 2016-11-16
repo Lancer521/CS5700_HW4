@@ -15,7 +15,7 @@ public class Puzzle {
 
     public int gridSize;
     public List<Character> symbols;
-    public char[][][] puzzle;
+    public Cell cells[][];
     public int result;
     public String outputFile;
     //TODO: consider storing solutions here
@@ -23,7 +23,18 @@ public class Puzzle {
     public Puzzle(int size, List<Character> symbols){
         gridSize = size;
         this.symbols = symbols;
-        puzzle = new char[size][size][size];
+//        cells = new Cell[size][size];
+        initializeCells(size);
+    }
+
+    private void initializeCells(int size){
+        cells = new Cell[size][];
+        for(int i = 0; i < size; i++){
+            cells[i] = new Cell[size];
+            for(int j = 0; j < size; j++){
+                cells[i][j] = new Cell();
+            }
+        }
     }
 
 }

@@ -45,7 +45,7 @@ public class PuzzleIO {
 
             for (int i = 0; i < puzzle.gridSize; i++){
                 for (int j = 0; j < puzzle.gridSize; j++){
-                    puzzle.puzzle[i][j][0] = rawPuzzleCharacters[charIndex++];
+                    puzzle.cells[i][j].value = rawPuzzleCharacters[charIndex++];
                 }
             }
         } catch (IOException ioe) {
