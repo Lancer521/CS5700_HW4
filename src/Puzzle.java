@@ -1,9 +1,8 @@
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Ty on 11/15/2016 at 4:39 PM.
- *
+ * A Puzzle is composed of Cells. It only knows how many cells exist and constrains what symbols may be used.
  */
 public class Puzzle {
 
@@ -23,7 +22,6 @@ public class Puzzle {
     public Puzzle(int size, List<Character> symbols){
         gridSize = size;
         this.symbols = symbols;
-//        cells = new Cell[size][size];
         initializeCells(size);
     }
 
