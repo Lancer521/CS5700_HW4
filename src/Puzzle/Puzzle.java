@@ -27,6 +27,10 @@ public class Puzzle {
         initializeCells(size);
     }
 
+    public Puzzle(Puzzle puzzle){
+        // TODO: Implement copy constructor
+    }
+
     private void initializeCells(int size){
         cells = new Cell[size][];
         for(int i = 0; i < size; i++){
@@ -47,7 +51,7 @@ public class Puzzle {
         }
         for(int i = 0; i < gridSize; i++){
             for(int j = 0; j < gridSize; j++){
-                if(cells[i][j].value != puzzle.cells[i][j].value){
+                if(cells[i][j].getValue() != puzzle.cells[i][j].getValue()){
                     return false;
                 }
             }

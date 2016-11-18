@@ -8,6 +8,25 @@ import java.util.List;
  */
 public class Cell {
 
-    public char value;
+    private char value;
     public List<Character> possibleValues;
+
+    public Cell(){
+
+    }
+
+    public void setValue(char val){
+        value = val;
+        if(hasValue()){
+            possibleValues.clear();
+        }
+    }
+
+    public char getValue(){
+        return value;
+    }
+
+    public boolean hasValue(){
+        return value != '-';
+    }
 }

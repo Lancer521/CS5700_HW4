@@ -13,6 +13,8 @@ public class Solver {
 
     public Puzzle solve(Puzzle puzzle){
 
+        // Make deep copy of Puzzle so as to preserve the original state
+        Puzzle puzzleToSolve = new Puzzle(puzzle);
         /*
         TODO: Add notes
         TODO: Iteratively call the different algorithms in the List

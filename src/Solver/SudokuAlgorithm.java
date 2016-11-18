@@ -1,5 +1,7 @@
 package Solver;
 
+import Puzzle.Puzzle;
+
 /**
  * Created by Ty on 11/16/2016.
  * Abstract superclass which follows the template pattern
@@ -8,9 +10,9 @@ package Solver;
  */
 public abstract class SudokuAlgorithm {
 
-    public final void solve(){
+    public final void solve(Puzzle puzzle){
         start();
-        applyMethod();
+        applyMethod(puzzle);
         finish();
     }
 
@@ -18,9 +20,9 @@ public abstract class SudokuAlgorithm {
         //TODO: add timing and count mechanisms, etc
     }
 
-    protected abstract void applyMethod();
+    protected abstract void applyMethod(Puzzle puzzle);
 
     private void finish(){
-        //TODO: end timing and count mechanisms, etc
+        //TODO: end timing and count mechanisms, check if solved, etc
     }
 }

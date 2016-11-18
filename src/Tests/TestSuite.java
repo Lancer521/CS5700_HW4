@@ -15,7 +15,7 @@ public class TestSuite {
     @Test
     public void testPuzzleIOGetInput4by4(){
         Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-4x4-0001.txt");
-        Assert.assertTrue(puzzle != null && puzzle.cells[2][1].value == '1');
+        Assert.assertTrue(puzzle != null && puzzle.cells[2][1].getValue() == '1');
     }
 
     @Test

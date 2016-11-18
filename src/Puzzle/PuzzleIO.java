@@ -45,7 +45,7 @@ public class PuzzleIO {
 
             for (int i = 0; i < puzzle.gridSize; i++){
                 for (int j = 0; j < puzzle.gridSize; j++){
-                    puzzle.cells[i][j].value = rawPuzzleCharacters[charIndex++];
+                    puzzle.cells[i][j].setValue(rawPuzzleCharacters[charIndex++]);
                 }
             }
         } catch (IOException ioe) {
@@ -63,7 +63,7 @@ public class PuzzleIO {
         parsedPuzzle += "\n";
         for(int i = 0; i < solvedPuzzle.gridSize; i++){
             for(int j = 0; j < solvedPuzzle.gridSize; j++){
-                parsedPuzzle += solvedPuzzle.cells[i][j].value + " ";
+                parsedPuzzle += solvedPuzzle.cells[i][j].getValue() + " ";
             }
             parsedPuzzle += "\n";
         }
