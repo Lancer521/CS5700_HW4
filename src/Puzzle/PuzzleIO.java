@@ -56,10 +56,14 @@ public class PuzzleIO {
 
     public static void outputPuzzle(String outputFile, Puzzle solvedPuzzle) {
 
-        String parsedPuzzle = "";
+        String parsedPuzzle = solvedPuzzle.gridSize + "\n";
+        for(char c : solvedPuzzle.symbols){
+            parsedPuzzle += c + " ";
+        }
+        parsedPuzzle += "\n";
         for(int i = 0; i < solvedPuzzle.gridSize; i++){
             for(int j = 0; j < solvedPuzzle.gridSize; j++){
-                parsedPuzzle += solvedPuzzle.cells[i][j].value + "";
+                parsedPuzzle += solvedPuzzle.cells[i][j].value + " ";
             }
             parsedPuzzle += "\n";
         }

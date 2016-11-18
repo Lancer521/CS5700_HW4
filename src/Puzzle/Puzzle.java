@@ -5,6 +5,7 @@ import java.util.List;
 /**
  * Created by Ty on 11/15/2016 at 4:39 PM.
  * A Puzzle.Puzzle is composed of Cells. It only knows how many cells exist and constrains what symbols may be used.
+ * The 2D cell array contains the table as follows: Cell[column_position][row_position]
  */
 public class Puzzle {
 
@@ -34,6 +35,24 @@ public class Puzzle {
                 cells[i][j] = new Cell();
             }
         }
+    }
+
+    /**
+     * Compares components of a Puzzle, mainly needed for testing purposes
+     * @param puzzle Puzzle to be compared to this Puzzle
+     */
+    public boolean equals(Puzzle puzzle){
+        if(gridSize != puzzle.gridSize || !symbols.equals(puzzle.symbols)){
+            return false;
+        }
+        for(int i = 0; i < gridSize; i++){
+            for(int j = 0; j < gridSize; j++){
+                if(cells[i][j].value != puzzle.cells[i][j].value){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 }
