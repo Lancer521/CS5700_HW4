@@ -18,8 +18,7 @@ public class Puzzle {
     public List<Character> symbols;
     public Cell cells[][];
     public int result;
-    public String outputFile;
-    //TODO: consider storing solutions here
+    //TODO: consider storing solutions here // Probably not because then a Puzzle would have to contain a puzzle...
 
     public Puzzle(int size, List<Character> symbols){
         gridSize = size;

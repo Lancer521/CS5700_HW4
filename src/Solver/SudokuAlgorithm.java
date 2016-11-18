@@ -2,7 +2,9 @@ package Solver;
 
 /**
  * Created by Ty on 11/16/2016.
- *
+ * Abstract superclass which follows the template pattern
+ * Will be extended to implement several different techniques for solving Sudoku
+ * See techniques here: http://angusj.com/sudoku/hints.php
  */
 public abstract class SudokuAlgorithm {
 

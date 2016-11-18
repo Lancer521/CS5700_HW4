@@ -1,7 +1,10 @@
+package Solver;
+
 import Solver.SudokuAlgorithm;
 
 /**
  * Created by Ty on 11/16/2016.
+ *
  */
 public class LockedCandidateRowColAlgorithm extends SudokuAlgorithm {
 

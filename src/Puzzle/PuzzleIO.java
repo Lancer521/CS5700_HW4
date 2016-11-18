@@ -1,8 +1,6 @@
 package Puzzle;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,8 +54,22 @@ public class PuzzleIO {
         return puzzle;
     }
 
-    public void outputPuzzle(Puzzle puzzle) {
+    public static void outputPuzzle(String outputFile, Puzzle solvedPuzzle) {
 
+        String parsedPuzzle = "";
+        for(int i = 0; i < solvedPuzzle.gridSize; i++){
+            for(int j = 0; j < solvedPuzzle.gridSize; j++){
+                parsedPuzzle += solvedPuzzle.cells[i][j].value + "";
+            }
+            parsedPuzzle += "\n";
+        }
+        try {
+            PrintWriter writer = new PrintWriter(outputFile);
+            writer.print(parsedPuzzle);
+            writer.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
 }
