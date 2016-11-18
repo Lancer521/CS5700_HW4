@@ -1,5 +1,6 @@
 package Puzzle;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,13 +12,13 @@ public class Cell {
     private char value;
     public List<Character> possibleValues;
 
-    public Cell(){
-
+    public Cell(List<Character> symbols){
+        possibleValues = new ArrayList<>(symbols);
     }
 
     public void setValue(char val){
         value = val;
-        if(hasValue()){
+        if(hasValue() && possibleValues != null){
             possibleValues.clear();
         }
     }

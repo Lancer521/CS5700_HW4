@@ -18,10 +18,10 @@ public class UpdateNotesAlgorithm extends SudokuAlgorithm {
 
         for (int i = 0; i < puzzle.gridSize; i++) {
             if (!puzzle.cells[i][0].hasValue()) {
-                updatePossibleValuesInColumn(i, puzzle);
+                updatePossibleValuesInRow(i, puzzle);
             }
             if(!puzzle.cells[0][i].hasValue()){
-                updatePossibleValuesInRow(i, puzzle);
+                updatePossibleValuesInColumn(i, puzzle);
             }
         }
         for(int i = 0; i < puzzle.gridSize; i += blockSize){
@@ -34,14 +34,14 @@ public class UpdateNotesAlgorithm extends SudokuAlgorithm {
     private void updatePossibleValuesInColumn(int colIndex, Puzzle puzzle) {
         List<Character> list = new ArrayList<>();
         for (int i = 0; i < puzzle.gridSize; i++) {
-            if (puzzle.cells[colIndex][i].hasValue()) {
-                list.add(puzzle.cells[colIndex][i].getValue());
+            if (puzzle.cells[i][colIndex].hasValue()) {
+                list.add(puzzle.cells[i][colIndex].getValue());
             }
         }
         for (int i = 0; i < puzzle.gridSize; i++) {
             for (char c : list) {
-                if (puzzle.cells[colIndex][i].possibleValues.contains(c)) {
-                    puzzle.cells[colIndex][i].possibleValues.remove(c);
+                if (puzzle.cells[i][colIndex].possibleValues.contains(c)) {
+                    puzzle.cells[i][colIndex].possibleValues.remove((Character) c);
                 }
             }
         }
@@ -50,14 +50,14 @@ public class UpdateNotesAlgorithm extends SudokuAlgorithm {
     private void updatePossibleValuesInRow(int rowIndex, Puzzle puzzle) {
         List<Character> list = new ArrayList<>();
         for (int i = 0; i < puzzle.gridSize; i++) {
-            if (puzzle.cells[i][rowIndex].hasValue()) {
-                list.add(puzzle.cells[i][rowIndex].getValue());
+            if (puzzle.cells[rowIndex][i].hasValue()) {
+                list.add(puzzle.cells[rowIndex][i].getValue());
             }
         }
         for (int i = 0; i < puzzle.gridSize; i++) {
             for (char c : list) {
-                if (puzzle.cells[i][rowIndex].possibleValues.contains(c)) {
-                    puzzle.cells[i][rowIndex].possibleValues.remove(c);
+                if (puzzle.cells[rowIndex][i].possibleValues.contains(c)) {
+                    puzzle.cells[rowIndex][i].possibleValues.remove((Character) c);
                 }
             }
         }
@@ -77,7 +77,7 @@ public class UpdateNotesAlgorithm extends SudokuAlgorithm {
             for (int j = rowIndex; j < rowIndex + blockSize; j++) {
                 for (char c : list) {
                     if (puzzle.cells[i][j].possibleValues.contains(c)) {
-                        puzzle.cells[i][j].possibleValues.remove(c);
+                        puzzle.cells[i][j].possibleValues.remove((Character) c);
                     }
                 }
             }

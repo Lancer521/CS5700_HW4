@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by Ty on 11/15/2016 at 4:39 PM.
  * A Puzzle.Puzzle is composed of Cells. It only knows how many cells exist and constrains what symbols may be used.
- * The 2D cell array contains the table as follows: Cell[column_position][row_position]
+ * The 2D cell array contains the table as follows: Cell[which_row][which_column]
  */
 public class Puzzle {
 
@@ -35,7 +35,7 @@ public class Puzzle {
         for(int i = 0; i < size; i++){
             cells[i] = new Cell[size];
             for(int j = 0; j < size; j++){
-                cells[i][j] = new Cell();
+                cells[i][j] = new Cell(symbols);
             }
         }
     }
