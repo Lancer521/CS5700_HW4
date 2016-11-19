@@ -16,7 +16,7 @@ public class Solver {
         // Make deep copy of Puzzle so as to preserve the original state
 //        Puzzle puzzleToSolve = new Puzzle(puzzle);
 
-        UpdateNotesAlgorithm update = new UpdateNotesAlgorithm();
+        AddNotesAlgorithm update = new AddNotesAlgorithm();
         update.applyMethod(puzzle);
         /*
         TODO: Iteratively call the different algorithms in the List

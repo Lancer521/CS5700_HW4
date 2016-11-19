@@ -4,7 +4,7 @@ package Tests;
 import Puzzle.PuzzleIO;
 import Puzzle.Puzzle;
 import Solver.SinglesAlgorithm;
-import Solver.UpdateNotesAlgorithm;
+import Solver.AddNotesAlgorithm;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -13,6 +13,7 @@ import java.util.List;
 
 /**
  * Created by Ty on 11/17/2016.
+ *
  */
 public class TestSuite {
 
@@ -31,9 +32,9 @@ public class TestSuite {
     }
 
     @Test
-    public void testUpdateNotesNewPuzzle() {
+    public void testUpdateNotesMyPuzzle() {
         Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-9x9.txt");
-        UpdateNotesAlgorithm algorithm = new UpdateNotesAlgorithm();
+        AddNotesAlgorithm algorithm = new AddNotesAlgorithm();
         algorithm.applyMethod(puzzle);
         List<Character> list = new ArrayList<>();
         list.add('2');
@@ -57,10 +58,44 @@ public class TestSuite {
     }
 
     @Test
+    public void testUpdateNotes9x9_0001(){
+        Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-9x9-0001.txt");
+        Assert.assertTrue(puzzle != null);
+        printToConsole(puzzle);
+        AddNotesAlgorithm notes = new AddNotesAlgorithm();
+        notes.applyMethod(puzzle);
+        List<Character> list = new ArrayList<>();
+        list.add('2');
+        Assert.assertTrue(puzzle.cells[0][2].possibleValues.equals(list));
+        Assert.assertTrue(puzzle.cells[8][5].possibleValues.equals(list));
+        list.clear();
+        list.add('5');
+        Assert.assertTrue(puzzle.cells[0][7].possibleValues.equals(list));
+        Assert.assertTrue(puzzle.cells[8][1].possibleValues.equals(list));
+        list.clear();
+        list.add('1');
+        Assert.assertTrue(puzzle.cells[1][6].possibleValues.equals(list));
+        Assert.assertTrue(puzzle.cells[2][1].possibleValues.equals(list));
+        list.clear();
+        list.add('8');
+        Assert.assertTrue(puzzle.cells[4][3].possibleValues.equals(list));
+        list.clear();
+        list.add('9');
+        Assert.assertTrue(puzzle.cells[4][4].possibleValues.equals(list));
+        Assert.assertTrue(puzzle.cells[5][0].possibleValues.equals(list));
+        list.clear();
+        list.add('7');
+        Assert.assertTrue(puzzle.cells[6][4].possibleValues.equals(list));
+        list.clear();
+        list.add('4');
+        Assert.assertTrue(puzzle.cells[6][6].possibleValues.equals(list));
+    }
+
+    @Test
     public void testSinglesAlgorithm4x4() {
         Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-4x4-0001.txt");
         printToConsole(puzzle);
-        UpdateNotesAlgorithm notes = new UpdateNotesAlgorithm();
+        AddNotesAlgorithm notes = new AddNotesAlgorithm();
         SinglesAlgorithm singles = new SinglesAlgorithm();
         notes.applyMethod(puzzle);
         singles.applyMethod(puzzle);
@@ -76,12 +111,36 @@ public class TestSuite {
     public void testSinglesAlgorithm9x9() {
         Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-9x9-0001.txt");
         printToConsole(puzzle);
-        UpdateNotesAlgorithm notes = new UpdateNotesAlgorithm();
+        AddNotesAlgorithm notes = new AddNotesAlgorithm();
         SinglesAlgorithm singles = new SinglesAlgorithm();
         notes.applyMethod(puzzle);
         singles.applyMethod(puzzle);
         printToConsole(puzzle);
         Assert.assertTrue(puzzle != null);
+        Assert.assertTrue(puzzle.cells[1][6].getValue() == '1');
+        Assert.assertTrue(puzzle.cells[2][1].getValue() == '1');
+        Assert.assertTrue(puzzle.cells[0][2].getValue() == '2');
+        Assert.assertTrue(puzzle.cells[8][5].getValue() == '2');
+        Assert.assertTrue(puzzle.cells[6][6].getValue() == '4');
+        Assert.assertTrue(puzzle.cells[0][7].getValue() == '5');
+        Assert.assertTrue(puzzle.cells[8][1].getValue() == '5');
+        Assert.assertTrue(puzzle.cells[6][4].getValue() == '7');
+        Assert.assertTrue(puzzle.cells[4][3].getValue() == '8');
+        Assert.assertTrue(puzzle.cells[4][4].getValue() == '9');
+        Assert.assertTrue(puzzle.cells[5][0].getValue() == '9');
+    }
+
+    @Test
+    public void testSolutionValidator9x9_0001(){
+        Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-9x9-0001.txt");
+        printToConsole(puzzle);
+        AddNotesAlgorithm notes = new AddNotesAlgorithm();
+        SinglesAlgorithm singles = new SinglesAlgorithm();
+        notes.applyMethod(puzzle);
+        singles.applyMethod(puzzle);
+        singles.applyMethod(puzzle);
+        singles.applyMethod(puzzle);
+        printToConsole(puzzle);
 
     }
 

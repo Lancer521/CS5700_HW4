@@ -62,6 +62,13 @@ public abstract class SudokuAlgorithm {
         }
     }
 
+    /**
+     * To work properly, the indices should be for the top-left cell of the block
+     * @param rowIndex Index to the top row of the block
+     * @param colIndex Index to the left-most column of the block
+     * @param puzzle Puzzle to be updated
+     * @param blockSize Size of the block
+     */
     protected final void updatePossibleValuesInBlock(int rowIndex, int colIndex, Puzzle puzzle, int blockSize) {
 
         List<Character> list = new ArrayList<>();

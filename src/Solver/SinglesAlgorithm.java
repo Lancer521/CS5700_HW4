@@ -28,12 +28,14 @@ public class SinglesAlgorithm extends SudokuAlgorithm {
     private void updateNotes(int rowIndex, int colIndex, Puzzle puzzle, int blockSize){
         updatePossibleValuesInRow(rowIndex, puzzle);
         updatePossibleValuesInColumn(colIndex, puzzle);
-        //TODO: Only pass the indices to the top-left cell in the affected block
-        for(int i = 0; i < puzzle.gridSize; i += blockSize){
-            for(int j = 0; j < puzzle.gridSize; j += blockSize){
 
+        //Only pass the indices to the top-left cell in the affected block
+        for(int i = 1; i <= blockSize; i++){
+            for(int j = 1; j <= blockSize; j++){
+                if(rowIndex < i*blockSize && colIndex < j*blockSize){
+                    updatePossibleValuesInBlock((i-1)*blockSize, (j-1)*blockSize, puzzle, blockSize);
+                }
             }
         }
-        updatePossibleValuesInBlock(rowIndex, colIndex, puzzle, blockSize);
     }
 }
