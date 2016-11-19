@@ -9,7 +9,7 @@ import Puzzle.Puzzle;
 public class NakedPairsAlgorithm extends SudokuAlgorithm {
 
     @Override
-    protected void applyMethod(Puzzle puzzle) {
+    public void applyMethod(Puzzle puzzle) {
         //Search rows/cols
         //If found, remove from rest of row/col possVals
     }

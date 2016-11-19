@@ -39,6 +39,7 @@ public class PuzzleIO {
                     rawPuzzle += str;
                 }
             }
+            br.close();
 
             char[] rawPuzzleCharacters = rawPuzzle.toCharArray();
             int charIndex = 0;
