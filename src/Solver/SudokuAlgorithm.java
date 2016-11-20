@@ -15,6 +15,7 @@ public abstract class SudokuAlgorithm {
 
     public final void solve(Puzzle puzzle){
         start();
+        //TODO: Extract basic cell navigation to here if possible
         applyMethod(puzzle);
         finish();
     }
@@ -67,7 +68,7 @@ public abstract class SudokuAlgorithm {
      * @param rowIndex Index to the top row of the block
      * @param colIndex Index to the left-most column of the block
      * @param puzzle Puzzle to be updated
-     * @param blockSize Size of the block
+     * @param blockSize SSize of the block
      */
     protected final void updatePossibleValuesInBlock(int rowIndex, int colIndex, Puzzle puzzle, int blockSize) {
 

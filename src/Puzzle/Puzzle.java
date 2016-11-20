@@ -26,10 +26,6 @@ public class Puzzle {
         initializeCells(size);
     }
 
-    public Puzzle(Puzzle puzzle){
-        // TODO: Implement copy constructor
-    }
-
     private void initializeCells(int size){
         cells = new Cell[size][];
         for(int i = 0; i < size; i++){
@@ -38,6 +34,20 @@ public class Puzzle {
                 cells[i][j] = new Cell(symbols);
             }
         }
+    }
+
+    public void printToConsole(){
+        System.out.println(gridSize);
+        for (Character c : symbols) {
+            System.out.print(c + " ");
+        }
+        for (int i = 0; i < gridSize; i++) {
+            System.out.println();
+            for (int j = 0; j < gridSize; j++) {
+                System.out.print(cells[i][j].getValue() + " ");
+            }
+        }
+        System.out.print("\n\n");
     }
 
     /**
@@ -57,5 +67,4 @@ public class Puzzle {
         }
         return true;
     }
-
 }

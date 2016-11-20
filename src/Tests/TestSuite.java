@@ -21,20 +21,24 @@ public class TestSuite {
     @Test
     public void testPuzzleIOGetInput4by4() {
         Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-4x4-0001.txt");
-        Assert.assertTrue(puzzle != null && puzzle.cells[2][1].getValue() == '1');
+        Assert.assertTrue(puzzle != null);
+        Assert.assertTrue(puzzle.cells[2][1].getValue() == '1');
     }
 
     @Test
     public void testPuzzleIOInOutIn() {
         Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-4x4-0001.txt");
+        Assert.assertTrue(puzzle != null);
         PuzzleIO.outputPuzzle("src/test.txt", puzzle);
         Puzzle newPuzzle = PuzzleIO.getPuzzle("src/test.txt");
-        Assert.assertTrue(puzzle != null && puzzle.equals(newPuzzle));
+        Assert.assertTrue(newPuzzle != null);
+        Assert.assertTrue(puzzle.equals(newPuzzle));
     }
 
     @Test
     public void testUpdateNotesMyPuzzle() {
         Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-9x9.txt");
+        Assert.assertTrue(puzzle != null);
         AddNotesAlgorithm algorithm = new AddNotesAlgorithm();
         algorithm.applyMethod(puzzle);
         List<Character> list = new ArrayList<>();
@@ -42,7 +46,7 @@ public class TestSuite {
         list.add('7');
         list.add('8');
         list.add('9');
-        Assert.assertTrue(puzzle != null && puzzle.cells[5][0].possibleValues.equals(list));
+        Assert.assertTrue(puzzle.cells[5][0].possibleValues.equals(list));
         list.clear();
         list.add('2');
         list.add('6');
@@ -62,7 +66,7 @@ public class TestSuite {
     public void testUpdateNotes9x9_0001(){
         Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-9x9-0001.txt");
         Assert.assertTrue(puzzle != null);
-        printToConsole(puzzle);
+        puzzle.printToConsole();
         AddNotesAlgorithm notes = new AddNotesAlgorithm();
         notes.applyMethod(puzzle);
         List<Character> list = new ArrayList<>();
@@ -95,13 +99,13 @@ public class TestSuite {
     @Test
     public void testSinglesAlgorithm4x4() {
         Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-4x4-0001.txt");
-        printToConsole(puzzle);
+        Assert.assertTrue(puzzle != null);
+        puzzle.printToConsole();
         AddNotesAlgorithm notes = new AddNotesAlgorithm();
         SinglesAlgorithm singles = new SinglesAlgorithm();
         notes.applyMethod(puzzle);
         singles.applyMethod(puzzle);
-        printToConsole(puzzle);
-        Assert.assertTrue(puzzle != null);
+        puzzle.printToConsole();
         Assert.assertTrue(puzzle.cells[0][1].getValue() == '4');
         Assert.assertTrue(puzzle.cells[1][2].getValue() == '2');
         Assert.assertTrue(puzzle.cells[2][3].getValue() == '2');
@@ -111,13 +115,13 @@ public class TestSuite {
     @Test
     public void testSinglesAlgorithm9x9() {
         Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-9x9-0001.txt");
-        printToConsole(puzzle);
+        Assert.assertTrue(puzzle != null);
+        puzzle.printToConsole();
         AddNotesAlgorithm notes = new AddNotesAlgorithm();
         SinglesAlgorithm singles = new SinglesAlgorithm();
         notes.applyMethod(puzzle);
         singles.applyMethod(puzzle);
-        printToConsole(puzzle);
-        Assert.assertTrue(puzzle != null);
+        puzzle.printToConsole();
         Assert.assertTrue(puzzle.cells[1][6].getValue() == '1');
         Assert.assertTrue(puzzle.cells[2][1].getValue() == '1');
         Assert.assertTrue(puzzle.cells[0][2].getValue() == '2');
@@ -134,20 +138,22 @@ public class TestSuite {
     @Test
     public void testSolutionValidator9x9_0001(){
         Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-9x9-0001.txt");
-        printToConsole(puzzle);
+        Assert.assertTrue(puzzle != null);
+        puzzle.printToConsole();
         AddNotesAlgorithm notes = new AddNotesAlgorithm();
         SinglesAlgorithm singles = new SinglesAlgorithm();
         notes.applyMethod(puzzle);
         singles.applyMethod(puzzle);
         singles.applyMethod(puzzle);
         singles.applyMethod(puzzle);
-        printToConsole(puzzle);
-
+        Assert.assertTrue(new Solver().isValidPuzzle(puzzle));
+        puzzle.printToConsole();
     }
 
     @Test
     public void testHasCorrectSymbols(){
         Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-BadSymbols-4x4.txt");
+        Assert.assertTrue(puzzle != null);
         Solver solver = new Solver();
         Assert.assertFalse(solver.hasCorrectSymbols(puzzle));
     }
@@ -155,6 +161,7 @@ public class TestSuite {
     @Test
     public void testIsLegalState(){
         Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-IllegalState-9x9.txt");
+        Assert.assertTrue(puzzle != null);
         Solver solver = new Solver();
         Assert.assertFalse(solver.isLegalState(puzzle));
     }
@@ -163,28 +170,19 @@ public class TestSuite {
     public void testSolverIsValidPuzzle(){
         Solver solver = new Solver();
         Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-IllegalState-9x9.txt");
+        Assert.assertTrue(puzzle != null);
         Assert.assertFalse(solver.isValidPuzzle(puzzle));
         puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-BadSymbols-4x4.txt");
+        Assert.assertTrue(puzzle != null);
         Assert.assertFalse(solver.isValidPuzzle(puzzle));
         puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-9x9-0001.txt");
+        Assert.assertTrue(puzzle != null);
         Assert.assertTrue(solver.isValidPuzzle(puzzle));
         puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-4x4-0001.txt");
+        Assert.assertTrue(puzzle != null);
         Assert.assertTrue(solver.isValidPuzzle(puzzle));
         puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-9x9.txt");
+        Assert.assertTrue(puzzle != null);
         Assert.assertTrue(solver.isValidPuzzle(puzzle));
-    }
-
-    private void printToConsole(Puzzle puzzle) {
-        System.out.println(puzzle.gridSize);
-        for (Character c : puzzle.symbols) {
-            System.out.print(c + " ");
-        }
-        for (int i = 0; i < puzzle.gridSize; i++) {
-            System.out.println();
-            for (int j = 0; j < puzzle.gridSize; j++) {
-                System.out.print(puzzle.cells[i][j].getValue() + " ");
-            }
-        }
-        System.out.print("\n\n");
     }
 }

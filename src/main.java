@@ -1,5 +1,6 @@
 import Puzzle.Puzzle;
 import Puzzle.PuzzleIO;
+import Solver.Solver;
 
 /**
  * Created by Ty on 11/15/2016 at 4:24 PM.
@@ -18,5 +19,9 @@ public class Main {
         Puzzle p2 = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-9x9-0001.txt");
         Puzzle p3 = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-25x25-0901.txt");
 
+        Solver solver = new Solver();
+        solver.solve(p1);
+        solver.solve(p2);
+        solver.solve(p3);
     }
 }

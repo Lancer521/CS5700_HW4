@@ -3,8 +3,6 @@ package Solver;
 import java.util.ArrayList;
 import java.util.List;
 import Puzzle.Puzzle;
-import com.sun.istack.internal.NotNull;
-import jdk.nashorn.internal.ir.annotations.Ignore;
 
 /**
  * Created by Ty on 11/16/2016.
@@ -14,16 +12,48 @@ public class Solver {
 
     List<SudokuAlgorithm> algorithms;
 
-    public Puzzle solve(Puzzle puzzle){
+    public int solve(Puzzle puzzle){
 
-        //TODO: consider printing out the original puzzle before doing anything - eliminates need for 2+ puzzles
-        AddNotesAlgorithm update = new AddNotesAlgorithm();
-        update.applyMethod(puzzle);
-        /*
-        TODO: Iteratively call the different algorithms in the List
-         */
+        puzzle.printToConsole();
+        if(!isValidPuzzle(puzzle)) return Puzzle.BAD_PUZZLE;
 
-        return null;
+        new AddNotesAlgorithm().applyMethod(puzzle);
+
+        initializeAlgorithmsList();
+
+        while(!isSolved(puzzle)) {
+            for (SudokuAlgorithm algorithm : algorithms) {
+                algorithm.solve(puzzle);
+            }
+        }
+
+        puzzle.printToConsole();
+
+        return -1;
+    }
+
+    private void initializeAlgorithmsList(){
+        algorithms = new ArrayList<>();
+        algorithms.add(new SinglesAlgorithm());
+//        algorithms.add(new HiddenSinglesAlgorithm());
+//        algorithms.add(new LockedCandidateRowColAlgorithm());
+//        algorithms.add(new LockedCandidateBlockAlgorithm());
+//        algorithms.add(new NakedPairsAlgorithm());
+    }
+
+    private boolean isSolved(Puzzle puzzle){
+        return isFull(puzzle) && isLegalState(puzzle);
+    }
+
+    private boolean isFull(Puzzle puzzle){
+        for(int i = 0; i < puzzle.gridSize; i++){
+            for(int j = 0; j < puzzle.gridSize; j++){
+                if(!puzzle.cells[i][j].hasValue()){
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     /**
