@@ -10,7 +10,7 @@ import Puzzle.Puzzle;
 public class AddNotesAlgorithm extends SudokuAlgorithm {
 
     @Override
-    public void applyMethod(Puzzle puzzle) {
+    public void applyMethod(Puzzle puzzle, int currRow, int currCol) {
         int blockSize = ((Double) Math.sqrt(puzzle.gridSize)).intValue();
 
         for (int i = 0; i < puzzle.gridSize; i++) {
@@ -23,7 +23,7 @@ public class AddNotesAlgorithm extends SudokuAlgorithm {
         }
         for(int i = 0; i < puzzle.gridSize; i += blockSize){
             for(int j = 0; j < puzzle.gridSize; j += blockSize){
-                updatePossibleValuesInBlock(i, j, puzzle, blockSize);
+                updatePossibleValuesInBlock(i, j, puzzle);
             }
         }
     }

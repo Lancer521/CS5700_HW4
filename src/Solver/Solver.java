@@ -17,7 +17,7 @@ public class Solver {
         puzzle.printToConsole();
         if(!isValidPuzzle(puzzle)) return Puzzle.BAD_PUZZLE;
 
-        new AddNotesAlgorithm().applyMethod(puzzle);
+        new AddNotesAlgorithm().applyMethod(puzzle, 0, 0);
 
         initializeAlgorithmsList();
 
@@ -124,13 +124,12 @@ public class Solver {
         }
 
         List<Character> blockList = new ArrayList<>();
-        int blockSize = ((Double) Math.sqrt(puzzle.gridSize)).intValue();
         //Iterate to each block
-        for (int i = 0; i < puzzle.gridSize; i += blockSize) {
-            for (int j = 0; j < puzzle.gridSize; j += blockSize) {
+        for (int i = 0; i < puzzle.gridSize; i += puzzle.blockSize) {
+            for (int j = 0; j < puzzle.gridSize; j += puzzle.blockSize) {
                 //Iterate cells within each block
-                for(int rowIndex = i; rowIndex < i + blockSize && rowIndex < puzzle.gridSize; rowIndex++){
-                    for(int colIndex = j; colIndex < j + blockSize && rowIndex < puzzle.gridSize; colIndex++){
+                for(int rowIndex = i; rowIndex < i + puzzle.blockSize && rowIndex < puzzle.gridSize; rowIndex++){
+                    for(int colIndex = j; colIndex < j + puzzle.blockSize && rowIndex < puzzle.gridSize; colIndex++){
                         if (puzzle.cells[rowIndex][colIndex].hasValue()) {
                             char val = puzzle.cells[rowIndex][colIndex].getValue();
                             if (blockList.contains(val)) {

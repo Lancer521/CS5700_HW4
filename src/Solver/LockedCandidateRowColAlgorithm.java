@@ -9,7 +9,7 @@ import Puzzle.Puzzle;
 public class LockedCandidateRowColAlgorithm extends SudokuAlgorithm {
 
     @Override
-    public void applyMethod(Puzzle puzzle) {
+    public void applyMethod(Puzzle puzzle, int currRow, int currCol) {
         //Search rows/cols
         //If found, remove from rest of block possVals
     }

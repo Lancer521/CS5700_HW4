@@ -15,8 +15,11 @@ public abstract class SudokuAlgorithm {
 
     public final void solve(Puzzle puzzle){
         start();
-        //TODO: Extract basic cell navigation to here if possible
-        applyMethod(puzzle);
+        for(int rowIndex = 0; rowIndex < puzzle.gridSize; rowIndex++){
+            for(int colIndex = 0; colIndex < puzzle.gridSize; colIndex++){
+                applyMethod(puzzle, rowIndex, colIndex);
+            }
+        }
         finish();
     }
 
@@ -25,7 +28,7 @@ public abstract class SudokuAlgorithm {
     }
 
     // This must be public for testing
-    public abstract void applyMethod(Puzzle puzzle);
+    public abstract void applyMethod(Puzzle puzzle, int currRow, int currCol);
 
     private void finish(){
         //TODO: end timing and count mechanisms, check if solved, etc
@@ -68,20 +71,19 @@ public abstract class SudokuAlgorithm {
      * @param rowIndex Index to the top row of the block
      * @param colIndex Index to the left-most column of the block
      * @param puzzle Puzzle to be updated
-     * @param blockSize SSize of the block
      */
-    protected final void updatePossibleValuesInBlock(int rowIndex, int colIndex, Puzzle puzzle, int blockSize) {
+    protected final void updatePossibleValuesInBlock(int rowIndex, int colIndex, Puzzle puzzle) {
 
         List<Character> list = new ArrayList<>();
-        for (int i = colIndex; i < colIndex + blockSize && i < puzzle.gridSize; i++) {
-            for (int j = rowIndex; j < rowIndex + blockSize && j < puzzle.gridSize; j++) {
+        for (int i = colIndex; i < colIndex + puzzle.blockSize && i < puzzle.gridSize; i++) {
+            for (int j = rowIndex; j < rowIndex + puzzle.blockSize && j < puzzle.gridSize; j++) {
                 if (puzzle.cells[i][j].hasValue()) {
                     list.add(puzzle.cells[i][j].getValue());
                 }
             }
         }
-        for (int i = colIndex; i < colIndex + blockSize && i < puzzle.gridSize; i++) {
-            for (int j = rowIndex; j < rowIndex + blockSize && j < puzzle.gridSize; j++) {
+        for (int i = colIndex; i < colIndex + puzzle.blockSize && i < puzzle.gridSize; i++) {
+            for (int j = rowIndex; j < rowIndex + puzzle.blockSize && j < puzzle.gridSize; j++) {
                 for (char c : list) {
                     if (puzzle.cells[i][j].possibleValues.contains(c)) {
                         puzzle.cells[i][j].possibleValues.remove((Character) c);

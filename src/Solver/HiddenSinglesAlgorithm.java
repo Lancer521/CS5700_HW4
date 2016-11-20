@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class HiddenSinglesAlgorithm extends SudokuAlgorithm {
 
     @Override
-    public void applyMethod(Puzzle puzzle) {
+    public void applyMethod(Puzzle puzzle, int currRow, int currCol) {
         int[] count = new int[puzzle.gridSize];
         Arrays.fill(count, 0);
 

@@ -40,7 +40,7 @@ public class TestSuite {
         Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-9x9.txt");
         Assert.assertTrue(puzzle != null);
         AddNotesAlgorithm algorithm = new AddNotesAlgorithm();
-        algorithm.applyMethod(puzzle);
+        algorithm.solve(puzzle);
         List<Character> list = new ArrayList<>();
         list.add('2');
         list.add('7');
@@ -68,7 +68,7 @@ public class TestSuite {
         Assert.assertTrue(puzzle != null);
         puzzle.printToConsole();
         AddNotesAlgorithm notes = new AddNotesAlgorithm();
-        notes.applyMethod(puzzle);
+        notes.solve(puzzle);
         List<Character> list = new ArrayList<>();
         list.add('2');
         Assert.assertTrue(puzzle.cells[0][2].possibleValues.equals(list));
@@ -103,8 +103,8 @@ public class TestSuite {
         puzzle.printToConsole();
         AddNotesAlgorithm notes = new AddNotesAlgorithm();
         SinglesAlgorithm singles = new SinglesAlgorithm();
-        notes.applyMethod(puzzle);
-        singles.applyMethod(puzzle);
+        notes.solve(puzzle);
+        singles.solve(puzzle);
         puzzle.printToConsole();
         Assert.assertTrue(puzzle.cells[0][1].getValue() == '4');
         Assert.assertTrue(puzzle.cells[1][2].getValue() == '2');
@@ -119,8 +119,8 @@ public class TestSuite {
         puzzle.printToConsole();
         AddNotesAlgorithm notes = new AddNotesAlgorithm();
         SinglesAlgorithm singles = new SinglesAlgorithm();
-        notes.applyMethod(puzzle);
-        singles.applyMethod(puzzle);
+        notes.solve(puzzle);
+        singles.solve(puzzle);
         puzzle.printToConsole();
         Assert.assertTrue(puzzle.cells[1][6].getValue() == '1');
         Assert.assertTrue(puzzle.cells[2][1].getValue() == '1');
@@ -142,10 +142,10 @@ public class TestSuite {
         puzzle.printToConsole();
         AddNotesAlgorithm notes = new AddNotesAlgorithm();
         SinglesAlgorithm singles = new SinglesAlgorithm();
-        notes.applyMethod(puzzle);
-        singles.applyMethod(puzzle);
-        singles.applyMethod(puzzle);
-        singles.applyMethod(puzzle);
+        notes.solve(puzzle);
+        singles.solve(puzzle);
+        singles.solve(puzzle);
+        singles.solve(puzzle);
         Assert.assertTrue(new Solver().isValidPuzzle(puzzle));
         puzzle.printToConsole();
     }
