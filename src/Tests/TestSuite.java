@@ -5,6 +5,7 @@ import Puzzle.PuzzleIO;
 import Puzzle.Puzzle;
 import Solver.SinglesAlgorithm;
 import Solver.AddNotesAlgorithm;
+import Solver.Solver;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -142,6 +143,35 @@ public class TestSuite {
         singles.applyMethod(puzzle);
         printToConsole(puzzle);
 
+    }
+
+    @Test
+    public void testHasCorrectSymbols(){
+        Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-BadSymbols-4x4.txt");
+        Solver solver = new Solver();
+        Assert.assertFalse(solver.hasCorrectSymbols(puzzle));
+    }
+
+    @Test
+    public void testIsLegalState(){
+        Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-IllegalState-9x9.txt");
+        Solver solver = new Solver();
+        Assert.assertFalse(solver.isLegalState(puzzle));
+    }
+
+    @Test
+    public void testSolverIsValidPuzzle(){
+        Solver solver = new Solver();
+        Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-IllegalState-9x9.txt");
+        Assert.assertFalse(solver.isValidPuzzle(puzzle));
+        puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-BadSymbols-4x4.txt");
+        Assert.assertFalse(solver.isValidPuzzle(puzzle));
+        puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-9x9-0001.txt");
+        Assert.assertTrue(solver.isValidPuzzle(puzzle));
+        puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-4x4-0001.txt");
+        Assert.assertTrue(solver.isValidPuzzle(puzzle));
+        puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-9x9.txt");
+        Assert.assertTrue(solver.isValidPuzzle(puzzle));
     }
 
     private void printToConsole(Puzzle puzzle) {
