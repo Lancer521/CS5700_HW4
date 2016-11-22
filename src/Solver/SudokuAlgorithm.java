@@ -18,6 +18,8 @@ public abstract class SudokuAlgorithm {
         for(int rowIndex = 0; rowIndex < puzzle.gridSize; rowIndex++){
             for(int colIndex = 0; colIndex < puzzle.gridSize; colIndex++){
                 applyMethod(puzzle, rowIndex, colIndex);
+//                System.out.println("(" + rowIndex + ", " + colIndex + ")");
+//                puzzle.printToConsole();
             }
         }
         finish();

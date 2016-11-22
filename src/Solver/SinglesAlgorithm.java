@@ -5,8 +5,7 @@ import Puzzle.Cell;
 
 /**
  * Created by Ty on 11/16/2016.
- * 1) Traverse all rows/columns looking for cells with a single possible value
- * a) If found, set the cell's value
+ * 1) If current cell has a single possible value, set it as the value
  * 2) Remove that value from the other cells' possible values
  */
 public class SinglesAlgorithm extends SudokuAlgorithm {

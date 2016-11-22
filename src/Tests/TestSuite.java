@@ -4,6 +4,7 @@ package Tests;
 import Puzzle.PuzzleIO;
 import Puzzle.Puzzle;
 import Solver.SinglesAlgorithm;
+import Solver.HiddenSinglesAlgorithm;
 import Solver.AddNotesAlgorithm;
 import Solver.Solver;
 import org.junit.Assert;
@@ -133,6 +134,19 @@ public class TestSuite {
         Assert.assertTrue(puzzle.cells[4][3].getValue() == '8');
         Assert.assertTrue(puzzle.cells[4][4].getValue() == '9');
         Assert.assertTrue(puzzle.cells[5][0].getValue() == '9');
+    }
+
+    @Test
+    public void testHiddenSinglesAlgorithm9x9(){
+        Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-HiddenSingle9x9.txt");
+        Assert.assertTrue(puzzle != null);
+        puzzle.printToConsole();
+        AddNotesAlgorithm notes = new AddNotesAlgorithm();
+        HiddenSinglesAlgorithm hidden = new HiddenSinglesAlgorithm();
+        notes.solve(puzzle);
+        hidden.solve(puzzle);
+        puzzle.printToConsole();
+        Assert.assertTrue(puzzle.cells[2][3].getValue() == '6');
     }
 
     @Test
