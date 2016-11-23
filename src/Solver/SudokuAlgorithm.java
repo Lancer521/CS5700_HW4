@@ -29,9 +29,9 @@ public abstract class SudokuAlgorithm {
     public abstract void applyMethod(Puzzle puzzle, int currRow, int currCol);
 
     public final void updateNotes(Puzzle puzzle, int rowIndex, int colIndex) {
-        updatePossibleValuesInRow(rowIndex, puzzle);
-        updatePossibleValuesInColumn(colIndex, puzzle);
-        updatePossibleValuesInBlock(getBlockIndex(puzzle, rowIndex), getBlockIndex(puzzle, colIndex), puzzle);
+        updatePossibleValuesInRow(puzzle, rowIndex);
+        updatePossibleValuesInColumn(puzzle, colIndex);
+        updatePossibleValuesInBlock(puzzle, getBlockIndex(puzzle, rowIndex), getBlockIndex(puzzle, colIndex));
     }
 
     /**
@@ -49,7 +49,7 @@ public abstract class SudokuAlgorithm {
         return -1;
     }
 
-    protected final void updatePossibleValuesInColumn(int colIndex, Puzzle puzzle) {
+    protected final void updatePossibleValuesInColumn(Puzzle puzzle, int colIndex) {
         List<Character> list = new ArrayList<>();
         for (int i = 0; i < puzzle.gridSize; i++) {
             if (puzzle.cells[i][colIndex].hasValue()) {
@@ -65,7 +65,7 @@ public abstract class SudokuAlgorithm {
         }
     }
 
-    protected final void updatePossibleValuesInRow(int rowIndex, Puzzle puzzle) {
+    protected final void updatePossibleValuesInRow(Puzzle puzzle, int rowIndex) {
         List<Character> list = new ArrayList<>();
         for (int i = 0; i < puzzle.gridSize; i++) {
             if (puzzle.cells[rowIndex][i].hasValue()) {
@@ -84,11 +84,11 @@ public abstract class SudokuAlgorithm {
     /**
      * To work properly, the indices should be for the top-left cell of the block
      * TODO: get the blockRow and blockCol inside method rather than in calling methods
+     * @param puzzle Puzzle to be updated
      * @param rowIndex Index to the top row of the block
      * @param colIndex Index to the left-most column of the block
-     * @param puzzle Puzzle to be updated
      */
-    protected final void updatePossibleValuesInBlock(int rowIndex, int colIndex, Puzzle puzzle) {
+    protected final void updatePossibleValuesInBlock(Puzzle puzzle, int rowIndex, int colIndex) {
 
         List<Character> list = new ArrayList<>();
         for (int i = colIndex; i < colIndex + puzzle.blockSize && i < puzzle.gridSize; i++) {

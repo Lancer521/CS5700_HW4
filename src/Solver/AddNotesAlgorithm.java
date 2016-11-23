@@ -15,15 +15,15 @@ public class AddNotesAlgorithm extends SudokuAlgorithm {
 
         for (int i = 0; i < puzzle.gridSize; i++) {
 //            if (!puzzle.cells[i][0].hasValue()) {
-                updatePossibleValuesInRow(i, puzzle);
+                updatePossibleValuesInRow(puzzle, i);
 //            }
 //            if(!puzzle.cells[0][i].hasValue()){
-                updatePossibleValuesInColumn(i, puzzle);
+                updatePossibleValuesInColumn(puzzle, i);
 //            }
         }
         for(int i = 0; i < puzzle.gridSize; i += blockSize){
             for(int j = 0; j < puzzle.gridSize; j += blockSize){
-                updatePossibleValuesInBlock(i, j, puzzle);
+                updatePossibleValuesInBlock(puzzle, i, j);
             }
         }
     }
