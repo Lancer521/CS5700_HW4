@@ -38,20 +38,8 @@ public class HiddenSinglesAlgorithm extends SudokuAlgorithm {
      */
     private List<Character> checkBlock(Puzzle puzzle, int currRow, int currCol) {
         //Find the top left square of the block to which this cell belongs
-        int blockRow = -1;
-        int blockCol = -1;
-        for (int i = 1; i <= puzzle.blockSize; i++) {
-            for (int j = 1; j <= puzzle.blockSize && blockCol == -1; j++) {
-                if (currCol < j * puzzle.blockSize) {
-                    blockCol = (j - 1) * puzzle.blockSize;
-                    break;
-                }
-            }
-            if(currRow < i * puzzle.blockSize){
-                blockRow = (i - 1) * puzzle.blockSize;
-                break;
-            }
-        }
+        int blockRow = getBlockIndex(puzzle, currRow);
+        int blockCol = getBlockIndex(puzzle, currCol);
 
         List<Character> list = new ArrayList<>(puzzle.cells[currRow][currCol].possibleValues);
 

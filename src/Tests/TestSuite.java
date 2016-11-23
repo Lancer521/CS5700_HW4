@@ -7,6 +7,7 @@ import Solver.SinglesAlgorithm;
 import Solver.HiddenSinglesAlgorithm;
 import Solver.AddNotesAlgorithm;
 import Solver.Solver;
+import Solver.LockedCandidateRowColAlgorithm;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -150,6 +151,84 @@ public class TestSuite {
     }
 
     @Test
+    public void testLockedCandidateRowColAlgorithm9x9(){
+        Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-LockedCandidateRowCol9x9.txt");
+        Assert.assertTrue(puzzle != null);
+        puzzle.printToConsole();
+        AddNotesAlgorithm notes = new AddNotesAlgorithm();
+        LockedCandidateRowColAlgorithm locked = new LockedCandidateRowColAlgorithm();
+        notes.solve(puzzle);
+
+        List<Character> list = new ArrayList<>();
+        list.add('3');
+        list.add('4');
+        list.add('5');
+        list.add('9');
+        Assert.assertTrue(puzzle.cells[0][0].possibleValues.equals(list));
+        list.clear();
+        list.add('4');
+        list.add('5');
+        list.add('9');
+        Assert.assertTrue(puzzle.cells[1][0].possibleValues.equals(list));
+        list.clear();
+        list.add('4');
+        list.add('5');
+        list.add('6');
+        list.add('8');
+        list.add('9');
+        Assert.assertTrue(puzzle.cells[4][0].possibleValues.equals(list));
+        list.clear();
+        list.add('5');
+        list.add('8');
+        list.add('9');
+        Assert.assertTrue(puzzle.cells[5][0].possibleValues.equals(list));
+        list.clear();
+        list.add('3');
+        list.add('5');
+        list.add('7');
+        Assert.assertTrue(puzzle.cells[7][0].possibleValues.equals(list));
+        list.clear();
+        list.add('4');
+        list.add('5');
+        list.add('6');
+        list.add('8');
+        Assert.assertTrue(puzzle.cells[8][0].possibleValues.equals(list));
+
+        locked.solve(puzzle);
+        puzzle.printToConsole();
+
+        list.clear();
+        list.add('4');
+        list.add('5');
+        list.add('9');
+        Assert.assertTrue(puzzle.cells[0][0].possibleValues.equals(list));
+        list.clear();
+        list.add('4');
+        list.add('5');
+        list.add('9');
+        Assert.assertTrue(puzzle.cells[1][0].possibleValues.equals(list));
+        list.clear();
+        list.add('4');
+        list.add('6');
+        list.add('8');
+        list.add('9');
+        Assert.assertTrue(puzzle.cells[4][0].possibleValues.equals(list));
+        list.clear();
+        list.add('8');
+        list.add('9');
+        Assert.assertTrue(puzzle.cells[5][0].possibleValues.equals(list));
+        list.clear();
+        list.add('3');
+        list.add('7');
+        Assert.assertTrue(puzzle.cells[7][0].possibleValues.equals(list));
+        list.clear();
+        list.add('4');
+        list.add('6');
+        list.add('8');
+        Assert.assertTrue(puzzle.cells[8][0].possibleValues.equals(list));
+    }
+
+    @Test
     public void testSolutionValidator9x9_0001(){
         Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-9x9-0001.txt");
         Assert.assertTrue(puzzle != null);
@@ -199,4 +278,13 @@ public class TestSuite {
         Assert.assertTrue(puzzle != null);
         Assert.assertTrue(solver.isValidPuzzle(puzzle));
     }
+
+    /*@Test
+    public void test(){
+        Solver solver = new Solver();
+        Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-HiddenSingle9x9.txt");
+        Assert.assertTrue(puzzle != null);
+        solver.solve(puzzle);
+        puzzle.printToConsole();
+    }*/
 }

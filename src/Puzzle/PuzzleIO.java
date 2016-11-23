@@ -57,7 +57,23 @@ public class PuzzleIO {
 
     public static void outputPuzzle(String outputFile, Puzzle solvedPuzzle) {
 
-        String parsedPuzzle = solvedPuzzle.gridSize + "\n";
+        String parsedPuzzle = "";
+
+        switch(solvedPuzzle.result){
+            case Puzzle.SOLVED:
+                parsedPuzzle = "SOLVED\n";
+                break;
+            case Puzzle.MULTIPLE_SOLUTIONS:
+                parsedPuzzle = "MULTIPLE SOLUTIONS\n";
+            case Puzzle.UNSOLVABLE:
+                parsedPuzzle = "UNSOLVABLE\n";
+                break;
+            case Puzzle.BAD_PUZZLE:
+                parsedPuzzle = "BAD PUZZLE\n";
+                break;
+        }
+
+        parsedPuzzle += solvedPuzzle.gridSize + "\n";
         for(char c : solvedPuzzle.symbols){
             parsedPuzzle += c + " ";
         }

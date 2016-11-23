@@ -14,26 +14,39 @@ import java.util.List;
 public abstract class SudokuAlgorithm {
 
     public final void solve(Puzzle puzzle){
-        start();
         for(int rowIndex = 0; rowIndex < puzzle.gridSize; rowIndex++){
             for(int colIndex = 0; colIndex < puzzle.gridSize; colIndex++){
                 applyMethod(puzzle, rowIndex, colIndex);
+                updateNotes(puzzle, rowIndex, colIndex);
 //                System.out.println("(" + rowIndex + ", " + colIndex + ")");
 //                puzzle.printToConsole();
+                //TODO: UPDATE AFFECTED CELLS
             }
         }
-        finish();
-    }
-
-    private void start(){
-        //TODO: add timing and count mechanisms, etc
     }
 
     // This must be public for testing
     public abstract void applyMethod(Puzzle puzzle, int currRow, int currCol);
 
-    private void finish(){
-        //TODO: end timing and count mechanisms, check if solved, etc
+    public final void updateNotes(Puzzle puzzle, int rowIndex, int colIndex) {
+        updatePossibleValuesInRow(rowIndex, puzzle);
+        updatePossibleValuesInColumn(colIndex, puzzle);
+        updatePossibleValuesInBlock(getBlockIndex(puzzle, rowIndex), getBlockIndex(puzzle, colIndex), puzzle);
+    }
+
+    /**
+     * Return the top-most row index or left-most column index in the block
+     * @param puzzle Puzzle to be examined
+     * @param currIndex Row or column index of the current
+     * @return top-most row index or left-most column index in the block
+     */
+    public final int getBlockIndex(Puzzle puzzle, int currIndex) {
+        for (int i = 1; i <= puzzle.blockSize; i++) {
+            if(currIndex < i * puzzle.blockSize){
+                return (i - 1) * puzzle.blockSize;
+            }
+        }
+        return -1;
     }
 
     protected final void updatePossibleValuesInColumn(int colIndex, Puzzle puzzle) {
@@ -70,6 +83,7 @@ public abstract class SudokuAlgorithm {
 
     /**
      * To work properly, the indices should be for the top-left cell of the block
+     * TODO: get the blockRow and blockCol inside method rather than in calling methods
      * @param rowIndex Index to the top row of the block
      * @param colIndex Index to the left-most column of the block
      * @param puzzle Puzzle to be updated

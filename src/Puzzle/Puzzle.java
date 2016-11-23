@@ -10,7 +10,7 @@ import java.util.List;
 public class Puzzle {
 
     public static final int UNTESTED = 0;
-    public static final int SOLVABLE = 1;
+    public static final int SOLVED = 1;
     public static final int UNSOLVABLE = 2;
     public static final int BAD_PUZZLE = 3;
     public static final int MULTIPLE_SOLUTIONS = 4;
