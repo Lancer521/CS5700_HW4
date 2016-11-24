@@ -46,12 +46,10 @@ public class Solver {
 
     private void initializeAlgorithmsList() {
         algorithms = new ArrayList<>();
-//        algorithms.add(new AddNotesAlgorithm());
         algorithms.add(new SinglesAlgorithm());
         algorithms.add(new HiddenSinglesAlgorithm());
         algorithms.add(new NakedPairsAlgorithm());
-//        algorithms.add(new LockedCandidateRowColAlgorithm());
-//        algorithms.add(new LockedCandidateBlockAlgorithm());
+        algorithms.add(new LockedCandidateRowColAlgorithm());
     }
 
     private boolean isSolved(Puzzle puzzle) {
@@ -83,10 +81,11 @@ public class Solver {
      * @return true if parts a, b, and c are satisfied, else false
      */
     public boolean isValidPuzzle(Puzzle puzzle) {
-        return isFormattedCorrectly(puzzle) && hasCorrectSymbols(puzzle) && isLegalState(puzzle);
+        return isFormattedCorrectly(puzzle) && hasCorrectSymbols(puzzle);
     }
 
     public boolean isSolvablePuzzle(Puzzle puzzle) {
+        if(!isLegalState(puzzle)) return false;
         for (int i = 0; i < puzzle.gridSize; i++) {
             for (int j = 0; j < puzzle.gridSize; j++) {
                 if (!puzzle.cells[i][j].hasValue() && puzzle.cells[i][j].possibleValues.size() == 0) {
