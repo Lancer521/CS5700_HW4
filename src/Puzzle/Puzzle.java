@@ -25,6 +25,7 @@ public class Puzzle {
         gridSize = size;
         blockSize = ((Double) Math.sqrt(gridSize)).intValue();
         this.symbols = symbols;
+        result = UNTESTED;
         initializeCells(size);
     }
 

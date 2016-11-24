@@ -17,10 +17,6 @@ public abstract class SudokuAlgorithm {
         for(int rowIndex = 0; rowIndex < puzzle.gridSize; rowIndex++){
             for(int colIndex = 0; colIndex < puzzle.gridSize; colIndex++){
                 applyMethod(puzzle, rowIndex, colIndex);
-//                updateNotes(puzzle, rowIndex, colIndex); // This can interfere with the updates done within an algorithm
-//                System.out.println("(" + rowIndex + ", " + colIndex + ")");
-//                puzzle.printToConsole();
-                //TODO: UPDATE AFFECTED CELLS
             }
         }
     }

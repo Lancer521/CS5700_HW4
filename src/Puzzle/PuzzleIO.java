@@ -55,11 +55,10 @@ public class PuzzleIO {
         return puzzle;
     }
 
-    public static void outputPuzzle(String outputFile, Puzzle solvedPuzzle) {
+    public static void outputPuzzle(Puzzle solvedPuzzle, String outputFile) {
 
-        //TODO: getPuzzleResultString - had to comment for testing purposes
-        String parsedPuzzle = "";
-//        String parsedPuzzle = solvedPuzzle.getPuzzleResultString() + "\n";
+//        String parsedPuzzle = "";
+        String parsedPuzzle = solvedPuzzle.getPuzzleResultString() + "\n";
 
         parsedPuzzle += solvedPuzzle.gridSize + "\n";
         for(char c : solvedPuzzle.symbols){
