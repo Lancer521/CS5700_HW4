@@ -13,13 +13,18 @@ public class Solver {
 
     List<SudokuAlgorithm> algorithms;
 
-    public int solve(Puzzle puzzle) {
-
-        puzzle.printToConsole();
+    public void solve(Puzzle puzzle) {
 
         new AddNotesAlgorithm().applyMethod(puzzle, 0, 0);
-        if (!isValidPuzzle(puzzle)) return Puzzle.BAD_PUZZLE;
-        if (!isSolvablePuzzle(puzzle)) return Puzzle.UNSOLVABLE;
+
+        if (!isValidPuzzle(puzzle)) {
+            puzzle.result = Puzzle.BAD_PUZZLE;
+            return;
+        }
+        if (!isSolvablePuzzle(puzzle)) {
+            puzzle.result = Puzzle.UNSOLVABLE;
+            return;
+        }
 
         initializeAlgorithmsList();
 
@@ -27,21 +32,14 @@ public class Solver {
         while (!isSolved(puzzle)) {
             for (SudokuAlgorithm algorithm : algorithms) {
                 algorithm.apply(puzzle);
-//                System.out.println("Attempt: " + count++);
-//                puzzle.printToConsole();
             }
             count++;
             if (count >= 1000) {
-                if (!isSolvablePuzzle(puzzle)){
-                    return Puzzle.UNSOLVABLE;
-                }
-                return Puzzle.MULTIPLE_SOLUTIONS;
+                puzzle.result = Puzzle.MULTIPLE_SOLUTIONS;
+                return;
             }
         }
-
-        puzzle.printToConsole();
-
-        return Puzzle.SOLVED;
+        puzzle.result = Puzzle.SOLVED;
     }
 
     private void initializeAlgorithmsList() {
@@ -71,11 +69,6 @@ public class Solver {
      * A puzzle is not valid if it:
      * a) is not formatted correctly
      * b) doesn't contain the provided symbols
-     * c) doesn't have a solution
-     * d) has more than one solution
-     * Parts a) and b) depend on the state of the puzzle as it is received, and can be immediately checked for validity
-     * Part c) can sometimes be discovered if the puzzle is in an illegal initial state
-     * Parts c) and d) are discovered through the Solver, and therefore cannot be immediately checked for validity
      *
      * @param puzzle Puzzle to be validated
      * @return true if parts a, b, and c are satisfied, else false
@@ -84,12 +77,20 @@ public class Solver {
         return isFormattedCorrectly(puzzle) && hasCorrectSymbols(puzzle);
     }
 
+    /**
+     * A puzzle is not solvable if:
+     * a) it is received in an explicitly illegal state
+     * b) it will inevitably arrive at an illegal state
+     *
+     * @param puzzle Puzzle to be examined
+     * @return true if it is in a legal state and all empty spaces have possible values
+     */
     public boolean isSolvablePuzzle(Puzzle puzzle) {
-        if(!isLegalState(puzzle)) return false;
+        if (!isLegalState(puzzle)) return false;
+
         for (int i = 0; i < puzzle.gridSize; i++) {
             for (int j = 0; j < puzzle.gridSize; j++) {
                 if (!puzzle.cells[i][j].hasValue() && puzzle.cells[i][j].possibleValues.size() == 0) {
-//                    puzzle.printToConsole();
                     return false;
                 }
             }
