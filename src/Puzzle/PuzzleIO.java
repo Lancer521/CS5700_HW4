@@ -55,9 +55,12 @@ public class PuzzleIO {
         return puzzle;
     }
 
-    public static void outputPuzzle(String outputFile, Puzzle solvedPuzzle) {
+    public static void outputPuzzle(Puzzle solvedPuzzle, String outputFile) {
 
-        String parsedPuzzle = solvedPuzzle.gridSize + "\n";
+//        String parsedPuzzle = "";
+        String parsedPuzzle = solvedPuzzle.getPuzzleResultString() + "\n";
+
+        parsedPuzzle += solvedPuzzle.gridSize + "\n";
         for(char c : solvedPuzzle.symbols){
             parsedPuzzle += c + " ";
         }

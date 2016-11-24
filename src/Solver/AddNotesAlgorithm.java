@@ -10,20 +10,20 @@ import Puzzle.Puzzle;
 public class AddNotesAlgorithm extends SudokuAlgorithm {
 
     @Override
-    public void applyMethod(Puzzle puzzle) {
+    public void applyMethod(Puzzle puzzle, int currRow, int currCol) {
         int blockSize = ((Double) Math.sqrt(puzzle.gridSize)).intValue();
 
         for (int i = 0; i < puzzle.gridSize; i++) {
 //            if (!puzzle.cells[i][0].hasValue()) {
-                updatePossibleValuesInRow(i, puzzle);
+                updatePossibleValuesInRow(puzzle, i);
 //            }
 //            if(!puzzle.cells[0][i].hasValue()){
-                updatePossibleValuesInColumn(i, puzzle);
+                updatePossibleValuesInColumn(puzzle, i);
 //            }
         }
         for(int i = 0; i < puzzle.gridSize; i += blockSize){
             for(int j = 0; j < puzzle.gridSize; j += blockSize){
-                updatePossibleValuesInBlock(i, j, puzzle, blockSize);
+                updatePossibleValuesInBlock(puzzle, i, j);
             }
         }
     }

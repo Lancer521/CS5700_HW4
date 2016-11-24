@@ -10,19 +10,22 @@ import java.util.List;
 public class Puzzle {
 
     public static final int UNTESTED = 0;
-    public static final int SOLVABLE = 1;
+    public static final int SOLVED = 1;
     public static final int UNSOLVABLE = 2;
     public static final int BAD_PUZZLE = 3;
     public static final int MULTIPLE_SOLUTIONS = 4;
 
     public int gridSize;
+    public int blockSize;
     public List<Character> symbols;
     public Cell cells[][];
     public int result;
 
     public Puzzle(int size, List<Character> symbols){
         gridSize = size;
+        blockSize = ((Double) Math.sqrt(gridSize)).intValue();
         this.symbols = symbols;
+        result = UNTESTED;
         initializeCells(size);
     }
 
@@ -48,6 +51,21 @@ public class Puzzle {
             }
         }
         System.out.print("\n\n");
+    }
+
+    public String getPuzzleResultString() {
+        switch(result){
+            case SOLVED:
+                return "SOLVED";
+            case MULTIPLE_SOLUTIONS:
+                return "MULTIPLE SOLUTIONS";
+            case UNSOLVABLE:
+                return "UNSOLVABLE";
+            case BAD_PUZZLE:
+                return "BAD PUZZLE";
+            default:
+                return "";
+        }
     }
 
     /**
