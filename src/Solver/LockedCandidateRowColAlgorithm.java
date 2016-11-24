@@ -9,7 +9,7 @@ import Puzzle.Puzzle;
  */
 public class LockedCandidateRowColAlgorithm extends SudokuAlgorithm {
 
-    @SuppressWarnings("all")
+    @SuppressWarnings("Duplicates")
     @Override
     public void applyMethod(Puzzle puzzle, int currRow, int currCol) {
 
@@ -61,8 +61,9 @@ public class LockedCandidateRowColAlgorithm extends SudokuAlgorithm {
      * @param searchValue Value to be searched for
      * @return false if the value is found in another row, else true
      */
-    @SuppressWarnings("all")
+    @SuppressWarnings("Duplicates")
     private boolean isLockedRow(Puzzle puzzle, int currRow, int currCol, Character searchValue) {
+        //TODO: appears to be looking beyond block - Puzzle Ten, 3rd LockedCandidate (HS, NS, LC), cell[4][0] possval 4
         int blockRow = getBlockIndex(puzzle, currRow);
         int blockCol = getBlockIndex(puzzle, currCol);
 
@@ -87,7 +88,7 @@ public class LockedCandidateRowColAlgorithm extends SudokuAlgorithm {
      * @param searchValue Value to be searched for
      * @return false if the value is found in another column, else true
      */
-    @SuppressWarnings("all")
+    @SuppressWarnings("Duplicates")
     private boolean isLockedColumn(Puzzle puzzle, int currRow, int currCol, Character searchValue) {
         int blockRow = getBlockIndex(puzzle, currRow);
         int blockCol = getBlockIndex(puzzle, currCol);

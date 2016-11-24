@@ -20,12 +20,14 @@ public class HiddenSinglesAlgorithm extends SudokuAlgorithm {
         list = checkRowAndColumn(puzzle, currRow, currCol);
         if(list.size() == 1){
             puzzle.cells[currRow][currCol].setValue(list.get(0));
+            updateNotes(puzzle, currRow, currCol);
             return;
         }
 
         list = checkBlock(puzzle, currRow, currCol);
         if (list.size() == 1) {
             puzzle.cells[currRow][currCol].setValue(list.get(0));
+            updateNotes(puzzle, currRow, currCol);
             return;
         }
     }
@@ -66,7 +68,7 @@ public class HiddenSinglesAlgorithm extends SudokuAlgorithm {
      * @param currCol Column index of current cell
      * @return true if the list size equals one after a column or row examination
      */
-    @SuppressWarnings("all")
+    @SuppressWarnings("Duplicates")
     private List<Character> checkRowAndColumn(Puzzle puzzle, int currRow, int currCol) {
         List<Character> list = new ArrayList<>(puzzle.cells[currRow][currCol].possibleValues);
 

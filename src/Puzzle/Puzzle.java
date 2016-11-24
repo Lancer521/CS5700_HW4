@@ -52,6 +52,21 @@ public class Puzzle {
         System.out.print("\n\n");
     }
 
+    public String getPuzzleResultString() {
+        switch(result){
+            case SOLVED:
+                return "SOLVED";
+            case MULTIPLE_SOLUTIONS:
+                return "MULTIPLE SOLUTIONS";
+            case UNSOLVABLE:
+                return "UNSOLVABLE";
+            case BAD_PUZZLE:
+                return "BAD PUZZLE";
+            default:
+                return "";
+        }
+    }
+
     /**
      * Compares components of a Puzzle, mainly needed for testing purposes
      * @param puzzle Puzzle to be compared to this Puzzle

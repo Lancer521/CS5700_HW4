@@ -14,9 +14,6 @@ public class SinglesAlgorithm extends SudokuAlgorithm {
     public void applyMethod(Puzzle puzzle, int currRow, int currCol) {
 
         Cell currCell = puzzle.cells[currRow][currCol];
-        if (currCell.hasValue()) {
-            return;
-        }
         if (currCell.possibleValues.size() == 1) {
             currCell.setValue(currCell.possibleValues.get(0));
             updateNotes(puzzle, currRow, currCol);

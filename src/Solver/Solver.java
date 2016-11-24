@@ -7,6 +7,7 @@ import Puzzle.Puzzle;
 
 /**
  * Created by Ty on 11/16/2016.
+ *
  */
 public class Solver {
 
@@ -22,16 +23,18 @@ public class Solver {
 
         initializeAlgorithmsList();
 
-        int count = 0;
+        int count = 1;
         while (!isSolved(puzzle)) {
             for (SudokuAlgorithm algorithm : algorithms) {
-                algorithm.solve(puzzle);
+                algorithm.apply(puzzle);
 //                System.out.println("Attempt: " + count++);
 //                puzzle.printToConsole();
             }
             count++;
-            if (count == 100) {
-                if (!isSolvablePuzzle(puzzle)) return Puzzle.UNSOLVABLE;
+            if (count >= 1000) {
+                if (!isSolvablePuzzle(puzzle)){
+                    return Puzzle.UNSOLVABLE;
+                }
                 return Puzzle.MULTIPLE_SOLUTIONS;
             }
         }
@@ -46,9 +49,9 @@ public class Solver {
 //        algorithms.add(new AddNotesAlgorithm());
         algorithms.add(new SinglesAlgorithm());
         algorithms.add(new HiddenSinglesAlgorithm());
-        algorithms.add(new LockedCandidateRowColAlgorithm());
+        algorithms.add(new NakedPairsAlgorithm());
+//        algorithms.add(new LockedCandidateRowColAlgorithm());
 //        algorithms.add(new LockedCandidateBlockAlgorithm());
-//        algorithms.add(new NakedPairsAlgorithm());
     }
 
     private boolean isSolved(Puzzle puzzle) {
@@ -87,6 +90,7 @@ public class Solver {
         for (int i = 0; i < puzzle.gridSize; i++) {
             for (int j = 0; j < puzzle.gridSize; j++) {
                 if (!puzzle.cells[i][j].hasValue() && puzzle.cells[i][j].possibleValues.size() == 0) {
+//                    puzzle.printToConsole();
                     return false;
                 }
             }
@@ -122,7 +126,7 @@ public class Solver {
         return true;
     }
 
-    @SuppressWarnings("all")
+    @SuppressWarnings("Duplicates")
     public boolean isLegalState(Puzzle puzzle) {
         List<Character> rowList = new ArrayList<>();
         List<Character> colList = new ArrayList<>();

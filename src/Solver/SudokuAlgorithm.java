@@ -13,11 +13,11 @@ import java.util.List;
  */
 public abstract class SudokuAlgorithm {
 
-    public final void solve(Puzzle puzzle){
+    public final void apply(Puzzle puzzle){
         for(int rowIndex = 0; rowIndex < puzzle.gridSize; rowIndex++){
             for(int colIndex = 0; colIndex < puzzle.gridSize; colIndex++){
                 applyMethod(puzzle, rowIndex, colIndex);
-                updateNotes(puzzle, rowIndex, colIndex);
+//                updateNotes(puzzle, rowIndex, colIndex); // This can interfere with the updates done within an algorithm
 //                System.out.println("(" + rowIndex + ", " + colIndex + ")");
 //                puzzle.printToConsole();
                 //TODO: UPDATE AFFECTED CELLS
@@ -91,15 +91,15 @@ public abstract class SudokuAlgorithm {
     protected final void updatePossibleValuesInBlock(Puzzle puzzle, int rowIndex, int colIndex) {
 
         List<Character> list = new ArrayList<>();
-        for (int i = colIndex; i < colIndex + puzzle.blockSize && i < puzzle.gridSize; i++) {
-            for (int j = rowIndex; j < rowIndex + puzzle.blockSize && j < puzzle.gridSize; j++) {
+        for (int i = rowIndex; i < rowIndex + puzzle.blockSize && i < puzzle.gridSize; i++) {
+            for (int j = colIndex; j < colIndex + puzzle.blockSize && j < puzzle.gridSize; j++) {
                 if (puzzle.cells[i][j].hasValue()) {
                     list.add(puzzle.cells[i][j].getValue());
                 }
             }
         }
-        for (int i = colIndex; i < colIndex + puzzle.blockSize && i < puzzle.gridSize; i++) {
-            for (int j = rowIndex; j < rowIndex + puzzle.blockSize && j < puzzle.gridSize; j++) {
+        for (int i = rowIndex; i < rowIndex + puzzle.blockSize && i < puzzle.gridSize; i++) {
+            for (int j = colIndex; j < colIndex + puzzle.blockSize && j < puzzle.gridSize; j++) {
                 for (char c : list) {
                     if (puzzle.cells[i][j].possibleValues.contains(c)) {
                         puzzle.cells[i][j].possibleValues.remove((Character) c);
