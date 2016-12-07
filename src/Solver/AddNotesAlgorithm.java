@@ -9,22 +9,22 @@ import Puzzle.Puzzle;
  */
 public class AddNotesAlgorithm extends SudokuAlgorithm {
 
-    @Override
-    public void applyMethod(Puzzle puzzle, int currRow, int currCol) {
-        int blockSize = ((Double) Math.sqrt(puzzle.gridSize)).intValue();
+  @Override
+  public void applyMethod(Puzzle puzzle, int currRow, int currCol) {
+    int blockSize = ((Double) Math.sqrt(puzzle.gridSize)).intValue();
 
-        for (int i = 0; i < puzzle.gridSize; i++) {
+    for (int i = 0; i < puzzle.gridSize; i++) {
 //            if (!puzzle.cells[i][0].hasValue()) {
-                updatePossibleValuesInRow(puzzle, i);
+      updatePossibleValuesInRow(puzzle, i);
 //            }
 //            if(!puzzle.cells[0][i].hasValue()){
-                updatePossibleValuesInColumn(puzzle, i);
+      updatePossibleValuesInColumn(puzzle, i);
 //            }
-        }
-        for(int i = 0; i < puzzle.gridSize; i += blockSize){
-            for(int j = 0; j < puzzle.gridSize; j += blockSize){
-                updatePossibleValuesInBlock(puzzle, i, j);
-            }
-        }
     }
+    for (int i = 0; i < puzzle.gridSize; i += blockSize) {
+      for (int j = 0; j < puzzle.gridSize; j += blockSize) {
+        updatePossibleValuesInBlock(puzzle, i, j);
+      }
+    }
+  }
 }
