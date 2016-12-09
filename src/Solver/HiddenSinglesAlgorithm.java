@@ -13,89 +13,91 @@ import java.util.List;
  */
 public class HiddenSinglesAlgorithm extends SudokuAlgorithm {
 
-    @Override
-    public void applyMethod(Puzzle puzzle, int currRow, int currCol) {
-        List<Character> list;
+  @Override
+  public boolean applyMethod(Puzzle puzzle, int currRow, int currCol) {
+    List<Character> list;
 
-        list = checkRowAndColumn(puzzle, currRow, currCol);
-        if(list.size() == 1){
-            puzzle.cells[currRow][currCol].setValue(list.get(0));
-            updateNotes(puzzle, currRow, currCol);
-            return;
-        }
-
-        list = checkBlock(puzzle, currRow, currCol);
-        if (list.size() == 1) {
-            puzzle.cells[currRow][currCol].setValue(list.get(0));
-            updateNotes(puzzle, currRow, currCol);
-            return;
-        }
+    list = checkRowAndColumn(puzzle, currRow, currCol);
+    if (list.size() == 1) {
+      puzzle.cells[currRow][currCol].setValue(list.get(0));
+      updateNotes(puzzle, currRow, currCol);
+      return true;
     }
 
-    /**
-     * Examine block of current cell to see if current cell contains hidden single
-     *  @param puzzle  Puzzle to be examined
-     * @param currRow Row index of current cell
-     * @param currCol Column index of current cell
-     */
-    private List<Character> checkBlock(Puzzle puzzle, int currRow, int currCol) {
-        //Find the top left square of the block to which this cell belongs
-        int blockRow = getBlockIndex(puzzle, currRow);
-        int blockCol = getBlockIndex(puzzle, currCol);
+    list = checkBlock(puzzle, currRow, currCol);
+    if (list.size() == 1) {
+      puzzle.cells[currRow][currCol].setValue(list.get(0));
+      updateNotes(puzzle, currRow, currCol);
+      return true;
+    }
+    return false;
+  }
 
-        List<Character> list = new ArrayList<>(puzzle.cells[currRow][currCol].possibleValues);
+  /**
+   * Examine block of current cell to see if current cell contains hidden single
+   *
+   * @param puzzle  Puzzle to be examined
+   * @param currRow Row index of current cell
+   * @param currCol Column index of current cell
+   */
+  private List<Character> checkBlock(Puzzle puzzle, int currRow, int currCol) {
+    //Find the top left square of the block to which this cell belongs
+    int blockRow = getBlockIndex(puzzle, currRow);
+    int blockCol = getBlockIndex(puzzle, currCol);
 
-        for (int i = blockRow; i < blockRow + puzzle.blockSize && !list.isEmpty(); i++) {
-            for (int j = blockCol; j < blockCol + puzzle.blockSize && !list.isEmpty(); j++) {
-                if (!(i== currRow && j == currCol) && !puzzle.cells[i][j].hasValue()) {
-                    for (Iterator<Character> iterator = list.iterator(); iterator.hasNext(); ) {
-                        char c = iterator.next();
-                        if (puzzle.cells[i][j].possibleValues.contains(c)) {
-                            iterator.remove();
-                        }
-                    }
-                }
+    List<Character> list = new ArrayList<>(puzzle.cells[currRow][currCol].possibleValues);
+
+    for (int i = blockRow; i < blockRow + puzzle.blockSize && !list.isEmpty(); i++) {
+      for (int j = blockCol; j < blockCol + puzzle.blockSize && !list.isEmpty(); j++) {
+        if (!(i == currRow && j == currCol) && !puzzle.cells[i][j].hasValue()) {
+          for (Iterator<Character> iterator = list.iterator(); iterator.hasNext(); ) {
+            char c = iterator.next();
+            if (puzzle.cells[i][j].possibleValues.contains(c)) {
+              iterator.remove();
             }
+          }
         }
-        return list;
+      }
+    }
+    return list;
+  }
+
+  /**
+   * Examine row and column of current cell to see if current cell contains hidden single
+   *
+   * @param puzzle  Puzzle to be examined
+   * @param currRow Row index of current cell
+   * @param currCol Column index of current cell
+   * @return true if the list size equals one after a column or row examination
+   */
+  @SuppressWarnings("Duplicates")
+  private List<Character> checkRowAndColumn(Puzzle puzzle, int currRow, int currCol) {
+    List<Character> list = new ArrayList<>(puzzle.cells[currRow][currCol].possibleValues);
+
+    for (int col = 0; col < puzzle.gridSize && !list.isEmpty(); col++) {
+      if (col != currCol && !puzzle.cells[currRow][col].hasValue()) {
+        for (Iterator<Character> iterator = list.iterator(); iterator.hasNext(); ) {
+          char c = iterator.next();
+          if (puzzle.cells[currRow][col].possibleValues.contains(c)) {
+            iterator.remove();
+          }
+        }
+      }
     }
 
-    /**
-     * Examine row and column of current cell to see if current cell contains hidden single
-     *
-     * @param puzzle  Puzzle to be examined
-     * @param currRow Row index of current cell
-     * @param currCol Column index of current cell
-     * @return true if the list size equals one after a column or row examination
-     */
-    @SuppressWarnings("Duplicates")
-    private List<Character> checkRowAndColumn(Puzzle puzzle, int currRow, int currCol) {
-        List<Character> list = new ArrayList<>(puzzle.cells[currRow][currCol].possibleValues);
+    if (list.size() == 1) return list;
+    list = new ArrayList<>(puzzle.cells[currRow][currCol].possibleValues);
 
-        for (int col = 0; col < puzzle.gridSize && !list.isEmpty(); col++) {
-            if (col != currCol && !puzzle.cells[currRow][col].hasValue()) {
-                for (Iterator<Character> iterator = list.iterator(); iterator.hasNext(); ) {
-                    char c = iterator.next();
-                    if (puzzle.cells[currRow][col].possibleValues.contains(c)) {
-                        iterator.remove();
-                    }
-                }
-            }
+    for (int row = 0; row < puzzle.gridSize && !list.isEmpty(); row++) {
+      if (row != currRow && !puzzle.cells[row][currCol].hasValue()) {
+        for (Iterator<Character> iterator = list.iterator(); iterator.hasNext(); ) {
+          char c = iterator.next();
+          if (puzzle.cells[row][currCol].possibleValues.contains(c)) {
+            iterator.remove();
+          }
         }
-
-        if (list.size() == 1) return list;
-        list = new ArrayList<>(puzzle.cells[currRow][currCol].possibleValues);
-
-        for (int row = 0; row < puzzle.gridSize && !list.isEmpty(); row++) {
-            if (row != currRow && !puzzle.cells[row][currCol].hasValue()) {
-                for (Iterator<Character> iterator = list.iterator(); iterator.hasNext(); ) {
-                    char c = iterator.next();
-                    if (puzzle.cells[row][currCol].possibleValues.contains(c)) {
-                        iterator.remove();
-                    }
-                }
-            }
-        }
-        return list;
+      }
     }
+    return list;
+  }
 }

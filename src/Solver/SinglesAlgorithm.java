@@ -1,7 +1,7 @@
 package Solver;
 
-import Puzzle.Puzzle;
 import Puzzle.Cell;
+import Puzzle.Puzzle;
 
 /**
  * Created by Ty on 11/16/2016.
@@ -10,13 +10,15 @@ import Puzzle.Cell;
  */
 public class SinglesAlgorithm extends SudokuAlgorithm {
 
-    @Override
-    public void applyMethod(Puzzle puzzle, int currRow, int currCol) {
+  @Override
+  public boolean applyMethod(Puzzle puzzle, int currRow, int currCol) {
 
-        Cell currCell = puzzle.cells[currRow][currCol];
-        if (currCell.possibleValues.size() == 1) {
-            currCell.setValue(currCell.possibleValues.get(0));
-            updateNotes(puzzle, currRow, currCol);
-        }
+    Cell currCell = puzzle.cells[currRow][currCol];
+    if (currCell.possibleValues.size() == 1) {
+      currCell.setValue(currCell.possibleValues.get(0));
+      updateNotes(puzzle, currRow, currCol);
+      return true;
     }
+    return false;
+  }
 }

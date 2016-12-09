@@ -14,20 +14,24 @@ import java.util.List;
  */
 public abstract class SudokuAlgorithm {
 
-  public final void apply(Puzzle puzzle) {
+  public final boolean apply(Puzzle puzzle) {
+    boolean didSomething = false;
     long startTime = System.nanoTime();
     for (int rowIndex = 0; rowIndex < puzzle.gridSize; rowIndex++) {
       for (int colIndex = 0; colIndex < puzzle.gridSize; colIndex++) {
-        applyMethod(puzzle, rowIndex, colIndex);
+        if(applyMethod(puzzle, rowIndex, colIndex)){
+          didSomething = true;
+        }
       }
     }
     long endTime = System.nanoTime();
     long duration = endTime - startTime;
     Log.getInstance().logData(this.getClass().getSimpleName(), duration);
+    return didSomething;
   }
 
   // This must be public for testing
-  public abstract void applyMethod(Puzzle puzzle, int currRow, int currCol);
+  public abstract boolean applyMethod(Puzzle puzzle, int currRow, int currCol);
 
   public final void updateNotes(Puzzle puzzle, int rowIndex, int colIndex) {
     updatePossibleValuesInRow(puzzle, rowIndex);

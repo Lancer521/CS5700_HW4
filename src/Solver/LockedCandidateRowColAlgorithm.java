@@ -9,99 +9,99 @@ import Puzzle.Puzzle;
  */
 public class LockedCandidateRowColAlgorithm extends SudokuAlgorithm {
 
-    @SuppressWarnings("Duplicates")
-    @Override
-    public void applyMethod(Puzzle puzzle, int currRow, int currCol) {
+  @SuppressWarnings("Duplicates")
+  @Override
+  /* Always returns false */
+  public boolean applyMethod(Puzzle puzzle, int currRow, int currCol) {
 
-        //Find the top left square of the block to which this cell belongs
-        int blockRow = getBlockIndex(puzzle, currRow);
-        int blockCol = getBlockIndex(puzzle, currCol);
+    boolean didSomething = false;
 
-        for (Character c : puzzle.cells[currRow][currCol].possibleValues) {
-            if (isLockedRow(puzzle, currRow, currCol, c)) {
-                //Remove from other cells in row
-                for (int col = 0; col < puzzle.gridSize; col++) {
-                    boolean canRemove = true;
-                    for (int i = blockCol; i < blockCol + puzzle.blockSize; i++) {
-                        if (col == i) {
-                            canRemove = false;
-                            break;
-                        }
-                    }
-                    if (canRemove) {
-                        puzzle.cells[currRow][col].possibleValues.remove(c);
-                    }
-                }
-                //update
-            } else if (isLockedColumn(puzzle, currRow, currCol, c)) {
-                //Remove from other cells in column
-                for (int row = 0; row < puzzle.gridSize; row++) {
-                    boolean canRemove = true;
-                    for (int i = blockRow; i < blockRow + puzzle.blockSize; i++) {
-                        if (row == i) {
-                            canRemove = false;
-                            break;
-                        }
-                    }
-                    if (canRemove) {
-                        puzzle.cells[row][currCol].possibleValues.remove(c);
-                    }
-                }
-                //update
+    //Find the top left square of the block to which this cell belongs
+    int blockRow = getBlockIndex(puzzle, currRow);
+    int blockCol = getBlockIndex(puzzle, currCol);
+
+    for (Character c : puzzle.cells[currRow][currCol].possibleValues) {
+      if (isLockedRow(puzzle, currRow, currCol, c)) {
+        //Remove from other cells in row
+        for (int col = 0; col < puzzle.gridSize; col++) {
+          boolean canRemove = true;
+          for (int i = blockCol; i < blockCol + puzzle.blockSize; i++) {
+            if (col == i) {
+              canRemove = false;
+              break;
             }
+          }
+          if (canRemove && puzzle.cells[currRow][col].possibleValues.remove(c)) didSomething = true;
         }
-    }
-
-    /**
-     * Check for search value in possible values of each row in a block that does not contain the current cell.
-     *
-     * @param puzzle      Puzzle to be examined
-     * @param currRow     Row of the current cell
-     * @param currCol     Column of the current cell
-     * @param searchValue Value to be searched for
-     * @return false if the value is found in another row, else true
-     */
-    @SuppressWarnings("Duplicates")
-    private boolean isLockedRow(Puzzle puzzle, int currRow, int currCol, Character searchValue) {
-        //TODO: appears to be looking beyond block - Puzzle Ten, 3rd LockedCandidate (HS, NS, LC), cell[4][0] possval 4
-        int blockRow = getBlockIndex(puzzle, currRow);
-        int blockCol = getBlockIndex(puzzle, currCol);
-
-        for (int row = blockRow; row < blockRow + puzzle.blockSize; row++) {
-            if (row != currRow) {
-                for (int col = blockCol; col < blockCol + puzzle.blockSize; col++) {
-                    if (puzzle.cells[row][col].possibleValues.contains(searchValue)) {
-                        return false;
-                    }
-                }
+        //TODO: update
+      } else if (isLockedColumn(puzzle, currRow, currCol, c)) {
+        //Remove from other cells in column
+        for (int row = 0; row < puzzle.gridSize; row++) {
+          boolean canRemove = true;
+          for (int i = blockRow; i < blockRow + puzzle.blockSize; i++) {
+            if (row == i) {
+              canRemove = false;
+              break;
             }
+          }
+          if (canRemove && puzzle.cells[row][currCol].possibleValues.remove(c)) didSomething = true;
         }
-        return true;
+        //TODO: update
+      }
     }
+    return didSomething;
+  }
 
-    /**
-     * Check for search value in possible values of each column in a block that does not contain the current cell.
-     *
-     * @param puzzle      Puzzle to be examined
-     * @param currRow     Row of the current cell
-     * @param currCol     Column of the current cell
-     * @param searchValue Value to be searched for
-     * @return false if the value is found in another column, else true
-     */
-    @SuppressWarnings("Duplicates")
-    private boolean isLockedColumn(Puzzle puzzle, int currRow, int currCol, Character searchValue) {
-        int blockRow = getBlockIndex(puzzle, currRow);
-        int blockCol = getBlockIndex(puzzle, currCol);
+  /**
+   * Check for search value in possible values of each row in a block that does not contain the current cell.
+   *
+   * @param puzzle      Puzzle to be examined
+   * @param currRow     Row of the current cell
+   * @param currCol     Column of the current cell
+   * @param searchValue Value to be searched for
+   * @return false if the value is found in another row, else true
+   */
+  @SuppressWarnings("Duplicates")
+  private boolean isLockedRow(Puzzle puzzle, int currRow, int currCol, Character searchValue) {
+    //TODO: appears to be looking beyond block - Puzzle Ten, 3rd LockedCandidate (HS, NS, LC), cell[4][0] possval 4
+    int blockRow = getBlockIndex(puzzle, currRow);
+    int blockCol = getBlockIndex(puzzle, currCol);
 
+    for (int row = blockRow; row < blockRow + puzzle.blockSize; row++) {
+      if (row != currRow) {
         for (int col = blockCol; col < blockCol + puzzle.blockSize; col++) {
-            if (col != currCol) {
-                for (int row = blockRow; row < blockRow + puzzle.blockSize; row++) {
-                    if (puzzle.cells[row][col].possibleValues.contains(searchValue)) {
-                        return false;
-                    }
-                }
-            }
+          if (puzzle.cells[row][col].possibleValues.contains(searchValue)) {
+            return false;
+          }
         }
-        return true;
+      }
     }
+    return true;
+  }
+
+  /**
+   * Check for search value in possible values of each column in a block that does not contain the current cell.
+   *
+   * @param puzzle      Puzzle to be examined
+   * @param currRow     Row of the current cell
+   * @param currCol     Column of the current cell
+   * @param searchValue Value to be searched for
+   * @return false if the value is found in another column, else true
+   */
+  @SuppressWarnings("Duplicates")
+  private boolean isLockedColumn(Puzzle puzzle, int currRow, int currCol, Character searchValue) {
+    int blockRow = getBlockIndex(puzzle, currRow);
+    int blockCol = getBlockIndex(puzzle, currCol);
+
+    for (int col = blockCol; col < blockCol + puzzle.blockSize; col++) {
+      if (col != currCol) {
+        for (int row = blockRow; row < blockRow + puzzle.blockSize; row++) {
+          if (puzzle.cells[row][col].possibleValues.contains(searchValue)) {
+            return false;
+          }
+        }
+      }
+    }
+    return true;
+  }
 }

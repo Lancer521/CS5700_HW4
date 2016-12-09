@@ -11,64 +11,82 @@ import java.util.List;
  */
 public class NakedPairsAlgorithm extends SudokuAlgorithm {
 
-    @Override
-    public void applyMethod(Puzzle puzzle, int currRow, int currCol) {
+  @Override
+  public boolean applyMethod(Puzzle puzzle, int currRow, int currCol) {
 
-        if (puzzle.cells[currRow][currCol].possibleValues.size() != 2) return;
-        List<Character> list = puzzle.cells[currRow][currCol].possibleValues;
+    boolean didSomething = false;
 
-        //Check row and column
-        for (int index = 0; index < puzzle.gridSize; index++) {
-            if (index != currCol && puzzle.cells[currRow][index].possibleValues.equals(list)) {
-                removePairValuesFromRow(puzzle, currRow, list);
-                break;
-            }
-            if (index != currRow && puzzle.cells[index][currCol].possibleValues.equals(list)) {
-                removePairValuesFromColumn(puzzle, currCol, list);
-                break;
-            }
+    if (puzzle.cells[currRow][currCol].possibleValues.size() != 2) return false;
+    List<Character> list = puzzle.cells[currRow][currCol].possibleValues;
+
+    //Check row and column
+    for (int index = 0; index < puzzle.gridSize; index++) {
+      if (index != currCol && puzzle.cells[currRow][index].possibleValues.equals(list)) {
+        if(removePairValuesFromRow(puzzle, currRow, list)){
+          didSomething = true;
         }
-
-        //Check block
-        int blockRow = getBlockIndex(puzzle, currRow);
-        int blockCol = getBlockIndex(puzzle, currCol);
-        for (int row = blockRow; row < blockRow + puzzle.blockSize && row < puzzle.gridSize; row++) {
-            for (int col = blockCol; col < blockCol + puzzle.blockSize && col < puzzle.gridSize; col++) {
-                if (!(row == currRow && col == currCol) && puzzle.cells[row][col].possibleValues.equals(list)) {
-                    removePairValuesFromBlock(puzzle, currRow, currCol, list);
-                }
-            }
+        break;
+      }
+      if (index != currRow && puzzle.cells[index][currCol].possibleValues.equals(list)) {
+        if(removePairValuesFromColumn(puzzle, currCol, list)){
+          didSomething = true;
         }
+        break;
+      }
     }
 
-    private void removePairValuesFromRow(Puzzle puzzle, int currRow, List<Character> list) {
-        for (int i = 0; i < puzzle.gridSize; i++) {
-            if (!puzzle.cells[currRow][i].possibleValues.equals(list)) {
-                puzzle.cells[currRow][i].possibleValues.remove(list.get(0));
-                puzzle.cells[currRow][i].possibleValues.remove(list.get(1));
-            }
+    //Check block
+    int blockRow = getBlockIndex(puzzle, currRow);
+    int blockCol = getBlockIndex(puzzle, currCol);
+    for (int row = blockRow; row < blockRow + puzzle.blockSize && row < puzzle.gridSize; row++) {
+      for (int col = blockCol; col < blockCol + puzzle.blockSize && col < puzzle.gridSize; col++) {
+        if (!(row == currRow && col == currCol) && puzzle.cells[row][col].possibleValues.equals(list)) {
+          if(removePairValuesFromBlock(puzzle, currRow, currCol, list)){
+            didSomething = true;
+          }
         }
+      }
     }
+    return didSomething;
+  }
 
-    private void removePairValuesFromColumn(Puzzle puzzle, int currCol, List<Character> list) {
-        for (int i = 0; i < puzzle.gridSize; i++) {
-            if (!puzzle.cells[i][currCol].possibleValues.equals(list)) {
-                puzzle.cells[i][currCol].possibleValues.remove(list.get(0));
-                puzzle.cells[i][currCol].possibleValues.remove(list.get(1));
-            }
-        }
+  @SuppressWarnings("Duplicates")
+  private boolean removePairValuesFromRow(Puzzle puzzle, int currRow, List<Character> list) {
+    boolean didSomething = false;
+    for (int i = 0; i < puzzle.gridSize; i++) {
+      if (!puzzle.cells[currRow][i].possibleValues.equals(list)) {
+        if(puzzle.cells[currRow][i].possibleValues.remove(list.get(0))) didSomething = true;
+        if(puzzle.cells[currRow][i].possibleValues.remove(list.get(1))) didSomething = true;
+      }
     }
+    return didSomething;
+  }
 
-    private void removePairValuesFromBlock(Puzzle puzzle, int currRow, int currCol, List<Character> list) {
-        int blockRow = getBlockIndex(puzzle, currRow);
-        int blockCol = getBlockIndex(puzzle, currCol);
-        for(int row = blockRow; row < blockRow + puzzle.blockSize && row < puzzle.gridSize; row++){
-            for(int col = blockCol; col < blockCol + puzzle.blockSize && col < puzzle.gridSize; col++){
-                if(!puzzle.cells[row][col].possibleValues.equals(list)){
-                    puzzle.cells[row][col].possibleValues.remove(list.get(0));
-                    puzzle.cells[row][col].possibleValues.remove(list.get(1));
-                }
-            }
-        }
+  @SuppressWarnings("Duplicates")
+  private boolean removePairValuesFromColumn(Puzzle puzzle, int currCol, List<Character> list) {
+    boolean didSomething = false;
+    for (int i = 0; i < puzzle.gridSize; i++) {
+      if (!puzzle.cells[i][currCol].possibleValues.equals(list)) {
+        if(puzzle.cells[i][currCol].possibleValues.remove(list.get(0))) didSomething = true;
+        if(puzzle.cells[i][currCol].possibleValues.remove(list.get(1))) didSomething = true;
+      }
     }
+    return didSomething;
+  }
+
+  @SuppressWarnings("Duplicates")
+  private boolean removePairValuesFromBlock(Puzzle puzzle, int currRow, int currCol, List<Character> list) {
+    boolean didSomething = false;
+    int blockRow = getBlockIndex(puzzle, currRow);
+    int blockCol = getBlockIndex(puzzle, currCol);
+    for (int row = blockRow; row < blockRow + puzzle.blockSize && row < puzzle.gridSize; row++) {
+      for (int col = blockCol; col < blockCol + puzzle.blockSize && col < puzzle.gridSize; col++) {
+        if (!puzzle.cells[row][col].possibleValues.equals(list)) {
+          if (puzzle.cells[row][col].possibleValues.remove(list.get(0))) didSomething = true;
+          if (puzzle.cells[row][col].possibleValues.remove(list.get(1))) didSomething = true;
+        }
+      }
+    }
+    return didSomething;
+  }
 }
