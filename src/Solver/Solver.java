@@ -45,6 +45,9 @@ public class Solver {
     puzzle.result = Puzzle.SOLVED;
   }
 
+  /**
+   * Add to list in order of preference (most preferred algorithm first)
+   */
   private void initializeAlgorithmsList() {
     algorithms = new ArrayList<>();
     algorithms.add(new SinglesAlgorithm());
