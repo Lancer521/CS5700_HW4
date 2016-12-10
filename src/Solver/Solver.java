@@ -35,8 +35,10 @@ public class Solver {
         if(!algorithms.get(1).apply(puzzle)){
           if(!algorithms.get(2).apply(puzzle)){
             if(!algorithms.get(3).apply(puzzle)){
-              puzzle.result = Puzzle.MULTIPLE_SOLUTIONS;
-              return;
+              if(!algorithms.get(4).apply(puzzle)) {
+                puzzle.result = Puzzle.MULTIPLE_SOLUTIONS;
+                return;
+              }
             }
           }
         }
@@ -54,6 +56,7 @@ public class Solver {
     algorithms.add(new HiddenSinglesAlgorithm());
     algorithms.add(new NakedPairsAlgorithm());
     algorithms.add(new LockedCandidateRowColAlgorithm());
+    algorithms.add(new LockedCandidateBlockAlgorithm());
   }
 
   private boolean isSolved(Puzzle puzzle) {

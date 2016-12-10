@@ -62,7 +62,7 @@ public class LockedCandidateRowColAlgorithm extends SudokuAlgorithm {
    * @return false if the value is found in another row, else true
    */
   @SuppressWarnings("Duplicates")
-  private boolean isLockedRow(Puzzle puzzle, int currRow, int currCol, Character searchValue) {
+  private boolean isLockedRow(Puzzle puzzle, int currRow, int currCol, char searchValue) {
     //TODO: appears to be looking beyond block - Puzzle Ten, 3rd LockedCandidate (HS, NS, LC), cell[4][0] possval 4
     int blockRow = getBlockIndex(puzzle, currRow);
     int blockCol = getBlockIndex(puzzle, currCol);
