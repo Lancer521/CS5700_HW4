@@ -19,10 +19,10 @@ public class Main {
     String inputFile = scanner.nextLine();
 
     if (!inputFile.isEmpty()) {
-      System.out.print("Enter the filepath to the file you wish to save the solution to, or press enter to save to \"src\\test.txt\"");
+      System.out.print("Enter the filepath to the file you wish to save the solution to, or press enter to save to \"src\\Output\\defaultOutput.txt\"");
       String outputFile = scanner.nextLine();
       if (outputFile.isEmpty()) {
-        outputFile = "src/test.txt";
+        outputFile = "src\\Output\\defaultOutput.txt";
       }
       Puzzle puzzle = PuzzleIO.getPuzzle(inputFile);
       new Solver().solve(puzzle);
