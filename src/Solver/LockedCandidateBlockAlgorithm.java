@@ -43,7 +43,7 @@ public class LockedCandidateBlockAlgorithm extends SudokuAlgorithm {
       }
     }
     if (!list.isEmpty()) {
-      didSomething = removeFromRowsInBlock(puzzle, list, currRow, blockRow, blockCol);
+      if(removeFromRowsInBlock(puzzle, list, currRow, blockRow, blockCol)) didSomething = true;
       if(list.size() == 1) return didSomething;
     }
 
@@ -61,7 +61,7 @@ public class LockedCandidateBlockAlgorithm extends SudokuAlgorithm {
       }
     }
     if (!list.isEmpty()) {
-      didSomething = removeFromColsInBlock(puzzle, list, currRow, blockRow, blockCol);
+      if(removeFromColsInBlock(puzzle, list, currRow, blockRow, blockCol)) didSomething = true;
     }
 
     return didSomething;

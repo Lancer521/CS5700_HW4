@@ -1,14 +1,9 @@
 package Tests;
 
 
-import Puzzle.PuzzleIO;
 import Puzzle.Puzzle;
-import Solver.SinglesAlgorithm;
-import Solver.HiddenSinglesAlgorithm;
-import Solver.AddNotesAlgorithm;
-import Solver.NakedPairsAlgorithm;
-import Solver.Solver;
-import Solver.LockedCandidateRowColAlgorithm;
+import Puzzle.PuzzleIO;
+import Solver.*;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -17,7 +12,7 @@ import java.util.List;
 
 /**
  * Created by Ty on 11/17/2016.
- *
+ * *
  */
 public class TestSuite {
 
@@ -28,16 +23,15 @@ public class TestSuite {
         Assert.assertTrue(puzzle.cells[2][1].getValue() == '1');
     }
 
-    //This test will not work while the output file contains solution-type text
-    /*@Test
+    @Test
     public void testPuzzleIOInOutIn() {
         Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-4x4-0001.txt");
         Assert.assertTrue(puzzle != null);
-        PuzzleIO.outputPuzzle(puzzle, "src/test.txt");
-        Puzzle newPuzzle = PuzzleIO.getPuzzle("src/test.txt");
+        PuzzleIO.outputPuzzle(puzzle, "src/Tests/test.txt");
+        Puzzle newPuzzle = PuzzleIO.getPuzzle("src/Tests/test.txt");
         Assert.assertTrue(newPuzzle != null);
         Assert.assertTrue(puzzle.equals(newPuzzle));
-    }*/
+    }
 
     @Test
     public void testUpdateNotesMyPuzzle() {
@@ -264,10 +258,7 @@ public class TestSuite {
     @Test
     public void testSolverIsValidPuzzle(){
         Solver solver = new Solver();
-        Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-IllegalState-9x9.txt");
-        Assert.assertTrue(puzzle != null);
-        Assert.assertFalse(solver.isValidPuzzle(puzzle));
-        puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-BadSymbols-4x4.txt");
+        Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-BadSymbols-4x4.txt");
         Assert.assertTrue(puzzle != null);
         Assert.assertFalse(solver.isValidPuzzle(puzzle));
         puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-9x9-0001.txt");
@@ -279,6 +270,14 @@ public class TestSuite {
         puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-9x9.txt");
         Assert.assertTrue(puzzle != null);
         Assert.assertTrue(solver.isValidPuzzle(puzzle));
+    }
+
+    @Test
+    public void testSolverIsSolvablePuzzle(){
+        Solver solver = new Solver();
+        Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-IllegalState-9x9.txt");
+        Assert.assertTrue(puzzle != null);
+        Assert.assertFalse(solver.isSolvablePuzzle(puzzle));
     }
 
     @Test

@@ -15,16 +15,16 @@ public class Log {
   private Map<String, Integer> count;
   private Map<String, Long> time;
 
+  private Log() {
+    count = new HashMap<>();
+    time = new HashMap<>();
+  }
+
   public static Log getInstance() {
     if (instance == null) {
       instance = new Log();
     }
     return instance;
-  }
-
-  private Log() {
-    count = new HashMap<>();
-    time = new HashMap<>();
   }
 
   public void logData(String algorithmName, long timeElapsed) {
@@ -42,7 +42,7 @@ public class Log {
   }
 
   public void writeToFile(){
-    writeToFile("src/log.txt");
+    writeToFile("src/Output/log.txt");
   }
 
   public void writeToFile(String filePath) {
@@ -55,9 +55,13 @@ public class Log {
 
       writer.println();
 
+      long totalTime = 0;
       for(String key : time.keySet()){
         writer.println(key + ": " + time.get(key));
+        totalTime += time.get(key);
       }
+      writer.println();
+      writer.println("Total time: " + totalTime);
 
       writer.close();
     } catch (FileNotFoundException e) {

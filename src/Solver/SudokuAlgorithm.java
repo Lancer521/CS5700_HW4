@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by Ty on 11/16/2016.
  * Abstract superclass which follows the template pattern
- * Will be extended to implement several different techniques for solving Sudoku
+ * Must be extended to implement several different techniques for solving Sudoku
  * See techniques here: http://angusj.com/sudoku/hints.php
  */
 public abstract class SudokuAlgorithm {
@@ -31,6 +31,7 @@ public abstract class SudokuAlgorithm {
   }
 
   // This must be public for testing
+  //TODO: Does this still need to be public and/or tested directly?
   public abstract boolean applyMethod(Puzzle puzzle, int currRow, int currCol);
 
   public final void updateNotes(Puzzle puzzle, int rowIndex, int colIndex) {
