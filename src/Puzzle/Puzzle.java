@@ -9,23 +9,16 @@ import java.util.List;
  */
 public class Puzzle {
 
-  public static final int UNTESTED = 0;
-  public static final int SOLVED = 1;
-  public static final int UNSOLVABLE = 2;
-  public static final int BAD_PUZZLE = 3;
-  public static final int MULTIPLE_SOLUTIONS = 4;
-
   public int gridSize;
   public int blockSize;
   public List<Character> symbols;
   public Cell cells[][];
-  public int result;
-
+  public Result result;
   public Puzzle(int size, List<Character> symbols) {
     gridSize = size;
     blockSize = ((Double) Math.sqrt(gridSize)).intValue();
     this.symbols = symbols;
-    result = UNTESTED;
+    result = Result.UNTESTED;
     initializeCells(size);
   }
 
@@ -112,4 +105,6 @@ public class Puzzle {
     }
     return -1;
   }
+
+  public enum Result {UNTESTED, SOLVED, UNSOLVABLE, BAD_PUZZLE, MULTIPLE_SOLUTIONS}
 }

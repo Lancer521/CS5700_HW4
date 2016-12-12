@@ -18,11 +18,11 @@ public class Solver {
     new AddNotesAlgorithm().applyMethod(puzzle, 0, 0);
 
     if (!isValidPuzzle(puzzle)) {
-      puzzle.result = Puzzle.BAD_PUZZLE;
+      puzzle.result = Puzzle.Result.BAD_PUZZLE;
       return;
     }
     if (!isSolvablePuzzle(puzzle)) {
-      puzzle.result = Puzzle.UNSOLVABLE;
+      puzzle.result = Puzzle.Result.UNSOLVABLE;
       return;
     }
 
@@ -36,7 +36,7 @@ public class Solver {
           if(!algorithms.get(2).apply(puzzle)){
             if(!algorithms.get(3).apply(puzzle)){
               if(!algorithms.get(4).apply(puzzle)) {
-                puzzle.result = Puzzle.MULTIPLE_SOLUTIONS;
+                puzzle.result = Puzzle.Result.MULTIPLE_SOLUTIONS;
                 return;
               }
             }
@@ -44,7 +44,7 @@ public class Solver {
         }
       }
     }
-    puzzle.result = Puzzle.SOLVED;
+    puzzle.result = Puzzle.Result.SOLVED;
   }
 
   /**

@@ -39,3 +39,49 @@ more appropriate to call it 'puzzle.calculateBlockIndex'
  test.  However, I don't feel like it's good practice to just make everything public for the sake of testing.  I'm not really sure what the work around is,
  so I tried to be wise in identifying which methods would be ok to make public (few) for testing, and which methods would be ok without unit tests because
  they are indirectly tested through other methods/algorithms.
+
+
+
+
+ PERFORMANCE OBSERVATIONS/ENHANCEMENTS:
+
+ Originally (in HW4) I was able to get these results:
+
+Number of method calls:
+ LockedCandidateRowColAlgorithm: 4067
+ NakedPairsAlgorithm: 4067
+ HiddenSinglesAlgorithm: 4067
+ SinglesAlgorithm: 4067
+
+Total time spent in method (nanoseconds):
+ LockedCandidateRowColAlgorithm: 339764783
+ NakedPairsAlgorithm: 139391844
+ HiddenSinglesAlgorithm: 600585038
+ SinglesAlgorithm: 27922230
+
+Total time spent in all algorithms: 1107663895
+
+ Initially, I tried to change the data types used in storing possible values of a cell (from List to String), but this actually doubled my runtime (as
+ discussed above).
+
+ I decided that rather than running through every method in a loop, I should give the more common/useful algorithms priority.  To do this, I decided to let
+ each algorithm return a boolean indicating whether it had made any changes. If it had, I would go back to the most common algorithm; if it hadn't, I would
+ continue on to the next available algorithm.  This meant drastically reducing the number of unnecessary algorithm calls by only calling them when needed.
+
+ After this refactor, I got these results:
+
+Number of method calls:
+ LockedCandidateRowColAlgorithm: 9
+ NakedPairsAlgorithm: 16
+ HiddenSinglesAlgorithm: 71
+ SinglesAlgorithm: 243
+
+Total time spent in method (nanoseconds):
+ LockedCandidateRowColAlgorithm: 4461052
+ NakedPairsAlgorithm: 5990531
+ HiddenSinglesAlgorithm: 25462837
+ SinglesAlgorithm: 22975075
+
+Total time spent in all algorithms: 58889495
+
+This refactoring resulted in a 95% reduction of the time elapsed before refactoring. (58,889,495 / 1,107,663,895 = .0532)
