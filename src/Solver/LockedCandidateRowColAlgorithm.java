@@ -17,8 +17,8 @@ public class LockedCandidateRowColAlgorithm extends SudokuAlgorithm {
     boolean didSomething = false;
 
     //Find the top left square of the block to which this cell belongs
-    int blockRow = getBlockIndex(puzzle, currRow);
-    int blockCol = getBlockIndex(puzzle, currCol);
+    int blockRow = calculateBlockIndex(puzzle, currRow);
+    int blockCol = calculateBlockIndex(puzzle, currCol);
 
     for (Character c : puzzle.cells[currRow][currCol].possibleValues) {
       if (isLockedRow(puzzle, currRow, currCol, c)) {
@@ -64,8 +64,8 @@ public class LockedCandidateRowColAlgorithm extends SudokuAlgorithm {
   @SuppressWarnings("Duplicates")
   private boolean isLockedRow(Puzzle puzzle, int currRow, int currCol, char searchValue) {
     //TODO: appears to be looking beyond block - Puzzle Ten, 3rd LockedCandidate (HS, NS, LC), cell[4][0] possval 4
-    int blockRow = getBlockIndex(puzzle, currRow);
-    int blockCol = getBlockIndex(puzzle, currCol);
+    int blockRow = calculateBlockIndex(puzzle, currRow);
+    int blockCol = calculateBlockIndex(puzzle, currCol);
 
     for (int row = blockRow; row < blockRow + puzzle.blockSize; row++) {
       if (row != currRow) {
@@ -90,8 +90,8 @@ public class LockedCandidateRowColAlgorithm extends SudokuAlgorithm {
    */
   @SuppressWarnings("Duplicates")
   private boolean isLockedColumn(Puzzle puzzle, int currRow, int currCol, Character searchValue) {
-    int blockRow = getBlockIndex(puzzle, currRow);
-    int blockCol = getBlockIndex(puzzle, currCol);
+    int blockRow = calculateBlockIndex(puzzle, currRow);
+    int blockCol = calculateBlockIndex(puzzle, currCol);
 
     for (int col = blockCol; col < blockCol + puzzle.blockSize; col++) {
       if (col != currCol) {

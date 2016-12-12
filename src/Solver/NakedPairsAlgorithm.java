@@ -36,8 +36,8 @@ public class NakedPairsAlgorithm extends SudokuAlgorithm {
     }
 
     //Check block
-    int blockRow = getBlockIndex(puzzle, currRow);
-    int blockCol = getBlockIndex(puzzle, currCol);
+    int blockRow = calculateBlockIndex(puzzle, currRow);
+    int blockCol = calculateBlockIndex(puzzle, currCol);
     for (int row = blockRow; row < blockRow + puzzle.blockSize && row < puzzle.gridSize; row++) {
       for (int col = blockCol; col < blockCol + puzzle.blockSize && col < puzzle.gridSize; col++) {
         if (!(row == currRow && col == currCol) && puzzle.cells[row][col].possibleValues.equals(list)) {
@@ -77,8 +77,8 @@ public class NakedPairsAlgorithm extends SudokuAlgorithm {
   @SuppressWarnings("Duplicates")
   private boolean removePairValuesFromBlock(Puzzle puzzle, int currRow, int currCol, List<Character> list) {
     boolean didSomething = false;
-    int blockRow = getBlockIndex(puzzle, currRow);
-    int blockCol = getBlockIndex(puzzle, currCol);
+    int blockRow = calculateBlockIndex(puzzle, currRow);
+    int blockCol = calculateBlockIndex(puzzle, currCol);
     for (int row = blockRow; row < blockRow + puzzle.blockSize && row < puzzle.gridSize; row++) {
       for (int col = blockCol; col < blockCol + puzzle.blockSize && col < puzzle.gridSize; col++) {
         if (!puzzle.cells[row][col].possibleValues.equals(list)) {

@@ -17,6 +17,7 @@ public abstract class SudokuAlgorithm {
   public final boolean apply(Puzzle puzzle) {
     boolean didSomething = false;
     long startTime = System.nanoTime();
+
     for (int rowIndex = 0; rowIndex < puzzle.gridSize; rowIndex++) {
       for (int colIndex = 0; colIndex < puzzle.gridSize; colIndex++) {
         if(applyMethod(puzzle, rowIndex, colIndex)){
@@ -24,20 +25,20 @@ public abstract class SudokuAlgorithm {
         }
       }
     }
+
     long endTime = System.nanoTime();
     long duration = endTime - startTime;
     Log.getInstance().logData(this.getClass().getSimpleName(), duration);
+
     return didSomething;
   }
 
-  // This must be public for testing
-  //TODO: Does this still need to be public and/or tested directly?
-  public abstract boolean applyMethod(Puzzle puzzle, int currRow, int currCol);
+  protected abstract boolean applyMethod(Puzzle puzzle, int currRow, int currCol);
 
   public final void updateNotes(Puzzle puzzle, int rowIndex, int colIndex) {
     updatePossibleValuesInRow(puzzle, rowIndex);
     updatePossibleValuesInColumn(puzzle, colIndex);
-    updatePossibleValuesInBlock(puzzle, getBlockIndex(puzzle, rowIndex), getBlockIndex(puzzle, colIndex));
+    updatePossibleValuesInBlock(puzzle, calculateBlockIndex(puzzle, rowIndex), calculateBlockIndex(puzzle, colIndex));
   }
 
   /**
@@ -47,7 +48,7 @@ public abstract class SudokuAlgorithm {
    * @param currIndex Row or column index of the current
    * @return top-most row index or left-most column index in the block
    */
-  public final int getBlockIndex(Puzzle puzzle, int currIndex) {
+  public final int calculateBlockIndex(Puzzle puzzle, int currIndex) {
     for (int i = 1; i <= puzzle.blockSize; i++) {
       if (currIndex < i * puzzle.blockSize) {
         return (i - 1) * puzzle.blockSize;
@@ -90,7 +91,6 @@ public abstract class SudokuAlgorithm {
 
   /**
    * To work properly, the indices should be for the top-left cell of the block
-   * TODO: get the blockRow and blockCol inside method rather than in calling methods
    *
    * @param puzzle   Puzzle to be updated
    * @param rowIndex Index to the top row of the block

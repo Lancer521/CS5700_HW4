@@ -1,4 +1,4 @@
-# CS5700_HW4
+# CS5700_HW4 / CS5700_HW5
 
 
 
@@ -11,3 +11,13 @@ algorithm was applied across the board (rather than each algorithm having to do 
 
 
 If you run the program such that it solves all 30 of the test puzzles, it will save them to src/Output/[puzzlename].txt
+
+
+
+Things learned in my revision:
+- Using and traversing Strings instead of Lists for the 'possibleValues' property of each cell actually MORE THAN DOUBLED the time required to solve all 30
+puzzles.  Unfortunately it took a few hours of refactoring to realize that.  Fortunately though, IntelliJ quickly reverted these uncommitted changes for me
+(yay version control).
+- Writing test cases actually helped me identify a few methods that weren't properly named, ie. the 'getBlockIndex' method implies that it is a simple
+getter to a property, however the method actually contains logic that figures out the top-left index of that block containing the given cell.  It is much
+more appropriate to call it 'calculateBlockIndex'
