@@ -1,6 +1,7 @@
 package Tests;
 
 
+import Puzzle.Cell;
 import Puzzle.Puzzle;
 import Puzzle.PuzzleIO;
 import Solver.*;
@@ -45,7 +46,108 @@ public class TestSuite {
   }
 
   @Test
-  public void testAddNotesMyPuzzle() {
+  public void testPuzzleIsFull(){
+    Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-4x4-0001-SOLVED.txt");
+    Assert.assertTrue(puzzle != null);
+    Assert.assertTrue(puzzle.isFull());
+
+    puzzle.cells[3][3].setValue('-');
+    Assert.assertFalse(puzzle.isFull());
+
+    puzzle.cells[3][3].setValue('2');
+    Assert.assertTrue(puzzle.isFull());
+  }
+
+  @Test
+  public void testCellHasValue(){
+    Cell cell = new Cell(new ArrayList<>());
+    cell.setValue('-');
+    Assert.assertFalse(cell.hasValue());
+
+    cell.setValue('3');
+    Assert.assertTrue(cell.hasValue());
+
+    cell.setValue('-');
+    Assert.assertFalse(cell.hasValue());
+  }
+
+  @Test
+  public void testSolverIsSolved(){
+    Solver solver = new Solver();
+    Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-4x4-0001-SOLVED.txt");
+    Assert.assertTrue(puzzle != null);
+    Assert.assertTrue(solver.isSolved(puzzle));
+
+    puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-4x4-0001.txt");
+    Assert.assertTrue(puzzle != null);
+    Assert.assertFalse(solver.isSolved(puzzle));
+
+    puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-9x9-0202-SOLVED.txt");
+    Assert.assertTrue(puzzle != null);
+    Assert.assertTrue(solver.isSolved(puzzle));
+  }
+
+  @Test
+  public void testSolverIsValidPuzzle() {
+    Solver solver = new Solver();
+    Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-BadSymbols-4x4.txt");
+    Assert.assertTrue(puzzle != null);
+    Assert.assertFalse(solver.isValidPuzzle(puzzle));
+    puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-9x9-0001.txt");
+    Assert.assertTrue(puzzle != null);
+    Assert.assertTrue(solver.isValidPuzzle(puzzle));
+    puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-4x4-0001.txt");
+    Assert.assertTrue(puzzle != null);
+    Assert.assertTrue(solver.isValidPuzzle(puzzle));
+    puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-9x9.txt");
+    Assert.assertTrue(puzzle != null);
+    Assert.assertTrue(solver.isValidPuzzle(puzzle));
+  }
+
+  @Test
+  public void testSolverIsSolvablePuzzle() {
+    Solver solver = new Solver();
+    Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-IllegalState-9x9.txt");
+    Assert.assertTrue(puzzle != null);
+    Assert.assertFalse(solver.isSolvablePuzzle(puzzle));
+
+    puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-9x9-0001.txt");
+    Assert.assertTrue(puzzle != null);
+    AddNotesAlgorithm notes = new AddNotesAlgorithm();
+    SinglesAlgorithm singles = new SinglesAlgorithm();
+    notes.apply(puzzle);
+    singles.apply(puzzle);
+    singles.apply(puzzle);
+    singles.apply(puzzle);
+    Assert.assertTrue(new Solver().isSolvablePuzzle(puzzle));
+  }
+
+  @Test
+  public void testSolverIsFormattedCorrectly(){
+    Solver solver = new Solver();
+    Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-IncorrectFormat-9x9.txt");
+    Assert.assertTrue(puzzle != null);
+    Assert.assertFalse(solver.isFormattedCorrectly(puzzle));
+  }
+
+  @Test
+  public void testSolverHasCorrectSymbols() {
+    Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-BadSymbols-4x4.txt");
+    Assert.assertTrue(puzzle != null);
+    Solver solver = new Solver();
+    Assert.assertFalse(solver.hasCorrectSymbols(puzzle));
+  }
+
+  @Test
+  public void testSolverIsLegalState() {
+    Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-IllegalState-9x9.txt");
+    Assert.assertTrue(puzzle != null);
+    Solver solver = new Solver();
+    Assert.assertFalse(solver.isLegalState(puzzle));
+  }
+
+  @Test
+  public void testAddNotesAlgorithmMyPuzzle() {
     Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-9x9.txt");
     Assert.assertTrue(puzzle != null);
     AddNotesAlgorithm algorithm = new AddNotesAlgorithm();
@@ -72,10 +174,10 @@ public class TestSuite {
   }
 
   @Test
-  public void testAddNotes9x9_0001() {
+  public void testAddNotesAlgorithm9x9_0001() {
     Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-9x9-0001.txt");
     Assert.assertTrue(puzzle != null);
-    puzzle.printToConsole();
+
     AddNotesAlgorithm notes = new AddNotesAlgorithm();
     notes.apply(puzzle);
     List<Character> list = new ArrayList<>();
@@ -109,12 +211,10 @@ public class TestSuite {
   public void testSinglesAlgorithm4x4() {
     Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-4x4-0001.txt");
     Assert.assertTrue(puzzle != null);
-    puzzle.printToConsole();
     AddNotesAlgorithm notes = new AddNotesAlgorithm();
     SinglesAlgorithm singles = new SinglesAlgorithm();
     notes.apply(puzzle);
     singles.apply(puzzle);
-    puzzle.printToConsole();
     Assert.assertTrue(puzzle.cells[0][1].getValue() == '4');
     Assert.assertTrue(puzzle.cells[1][2].getValue() == '2');
     Assert.assertTrue(puzzle.cells[2][3].getValue() == '2');
@@ -125,12 +225,10 @@ public class TestSuite {
   public void testSinglesAlgorithm9x9() {
     Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-9x9-0001.txt");
     Assert.assertTrue(puzzle != null);
-    puzzle.printToConsole();
     AddNotesAlgorithm notes = new AddNotesAlgorithm();
     SinglesAlgorithm singles = new SinglesAlgorithm();
     notes.apply(puzzle);
     singles.apply(puzzle);
-    puzzle.printToConsole();
     Assert.assertTrue(puzzle.cells[1][6].getValue() == '1');
     Assert.assertTrue(puzzle.cells[2][1].getValue() == '1');
     Assert.assertTrue(puzzle.cells[0][2].getValue() == '2');
@@ -148,12 +246,10 @@ public class TestSuite {
   public void testHiddenSinglesAlgorithm9x9() {
     Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-HiddenSingle9x9.txt");
     Assert.assertTrue(puzzle != null);
-    puzzle.printToConsole();
     AddNotesAlgorithm notes = new AddNotesAlgorithm();
     HiddenSinglesAlgorithm hidden = new HiddenSinglesAlgorithm();
     notes.apply(puzzle);
     hidden.apply(puzzle);
-    puzzle.printToConsole();
     Assert.assertTrue(puzzle.cells[2][3].getValue() == '6');
   }
 
@@ -161,7 +257,6 @@ public class TestSuite {
   public void testLockedCandidateRowColAlgorithm9x9() {
     Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-LockedCandidateRowCol9x9.txt");
     Assert.assertTrue(puzzle != null);
-    puzzle.printToConsole();
     AddNotesAlgorithm notes = new AddNotesAlgorithm();
     LockedCandidateRowColAlgorithm locked = new LockedCandidateRowColAlgorithm();
     notes.apply(puzzle);
@@ -202,7 +297,6 @@ public class TestSuite {
     Assert.assertTrue(puzzle.cells[8][0].possibleValues.equals(list));
 
     locked.apply(puzzle);
-    puzzle.printToConsole();
 
     list.clear();
     list.add('4');
@@ -236,66 +330,9 @@ public class TestSuite {
   }
 
   @Test
-  public void testSolutionValidator9x9_0001() {
-    Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-9x9-0001.txt");
-    Assert.assertTrue(puzzle != null);
-    puzzle.printToConsole();
-    AddNotesAlgorithm notes = new AddNotesAlgorithm();
-    SinglesAlgorithm singles = new SinglesAlgorithm();
-    notes.apply(puzzle);
-    singles.apply(puzzle);
-    singles.apply(puzzle);
-    singles.apply(puzzle);
-    Assert.assertTrue(new Solver().isSolvablePuzzle(puzzle));
-    puzzle.printToConsole();
-  }
-
-  @Test
-  public void testHasCorrectSymbols() {
-    Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-BadSymbols-4x4.txt");
-    Assert.assertTrue(puzzle != null);
-    Solver solver = new Solver();
-    Assert.assertFalse(solver.hasCorrectSymbols(puzzle));
-  }
-
-  @Test
-  public void testIsLegalState() {
-    Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-IllegalState-9x9.txt");
-    Assert.assertTrue(puzzle != null);
-    Solver solver = new Solver();
-    Assert.assertFalse(solver.isLegalState(puzzle));
-  }
-
-  @Test
-  public void testSolverIsValidPuzzle() {
-    Solver solver = new Solver();
-    Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-BadSymbols-4x4.txt");
-    Assert.assertTrue(puzzle != null);
-    Assert.assertFalse(solver.isValidPuzzle(puzzle));
-    puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-9x9-0001.txt");
-    Assert.assertTrue(puzzle != null);
-    Assert.assertTrue(solver.isValidPuzzle(puzzle));
-    puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-4x4-0001.txt");
-    Assert.assertTrue(puzzle != null);
-    Assert.assertTrue(solver.isValidPuzzle(puzzle));
-    puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-9x9.txt");
-    Assert.assertTrue(puzzle != null);
-    Assert.assertTrue(solver.isValidPuzzle(puzzle));
-  }
-
-  @Test
-  public void testSolverIsSolvablePuzzle() {
-    Solver solver = new Solver();
-    Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-IllegalState-9x9.txt");
-    Assert.assertTrue(puzzle != null);
-    Assert.assertFalse(solver.isSolvablePuzzle(puzzle));
-  }
-
-  @Test
   public void testNakedPairsAlgorithm() {
     Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/myPuzzle-NakedPairs9x9.txt");
     Assert.assertTrue(puzzle != null);
-    puzzle.printToConsole();
     new AddNotesAlgorithm().apply(puzzle);
 
     List<Character> list = new ArrayList<>();

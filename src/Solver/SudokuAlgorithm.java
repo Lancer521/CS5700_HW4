@@ -38,23 +38,7 @@ public abstract class SudokuAlgorithm {
   public final void updateNotes(Puzzle puzzle, int rowIndex, int colIndex) {
     updatePossibleValuesInRow(puzzle, rowIndex);
     updatePossibleValuesInColumn(puzzle, colIndex);
-    updatePossibleValuesInBlock(puzzle, calculateBlockIndex(puzzle, rowIndex), calculateBlockIndex(puzzle, colIndex));
-  }
-
-  /**
-   * Return the top-most row index or left-most column index in the block
-   *
-   * @param puzzle    Puzzle to be examined
-   * @param currIndex Row or column index of the current
-   * @return top-most row index or left-most column index in the block
-   */
-  public final int calculateBlockIndex(Puzzle puzzle, int currIndex) {
-    for (int i = 1; i <= puzzle.blockSize; i++) {
-      if (currIndex < i * puzzle.blockSize) {
-        return (i - 1) * puzzle.blockSize;
-      }
-    }
-    return -1;
+    updatePossibleValuesInBlock(puzzle, puzzle.calculateBlockIndex(rowIndex), puzzle.calculateBlockIndex(colIndex));
   }
 
   protected final void updatePossibleValuesInColumn(Puzzle puzzle, int colIndex) {

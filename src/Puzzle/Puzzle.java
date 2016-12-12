@@ -85,4 +85,30 @@ public class Puzzle {
         }
         return true;
     }
+
+    public boolean isFull() {
+        for (int i = 0; i < gridSize; i++) {
+            for (int j = 0; j < gridSize; j++) {
+                if (!cells[i][j].hasValue()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+  /**
+   * Return the top-most row index or left-most column index of the block containing the cell
+   *
+   * @param currIndex Row or column index of the current
+   * @return top-most row index or left-most column index in the block
+   */
+  public int calculateBlockIndex(int currIndex) {
+    for (int i = 1; i <= blockSize; i++) {
+      if (currIndex < i * blockSize) {
+        return (i - 1) * blockSize;
+      }
+    }
+    return -1;
+  }
 }

@@ -26,8 +26,8 @@ public class LockedCandidateBlockAlgorithm extends SudokuAlgorithm {
      */
 
     //Find the top left square of the block to which this cell belongs
-    int blockRow = calculateBlockIndex(puzzle, currRow);
-    int blockCol = calculateBlockIndex(puzzle, currCol);
+    int blockRow = puzzle.calculateBlockIndex(currRow);
+    int blockCol = puzzle.calculateBlockIndex(currCol);
 
     List<Character> list = new ArrayList<>(puzzle.cells[currRow][currCol].possibleValues);
 

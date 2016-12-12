@@ -59,19 +59,8 @@ public class Solver {
     algorithms.add(new LockedCandidateBlockAlgorithm());
   }
 
-  private boolean isSolved(Puzzle puzzle) {
-    return isFull(puzzle) && isLegalState(puzzle);
-  }
-
-  private boolean isFull(Puzzle puzzle) {
-    for (int i = 0; i < puzzle.gridSize; i++) {
-      for (int j = 0; j < puzzle.gridSize; j++) {
-        if (!puzzle.cells[i][j].hasValue()) {
-          return false;
-        }
-      }
-    }
-    return true;
+  public boolean isSolved(Puzzle puzzle) {
+    return puzzle.isFull() && isLegalState(puzzle);
   }
 
   /**
@@ -114,7 +103,7 @@ public class Solver {
    * @param puzzle Puzzle to be validated
    * @return true if dimensions are correct
    */
-  private boolean isFormattedCorrectly(Puzzle puzzle) {
+  public boolean isFormattedCorrectly(Puzzle puzzle) {
     return puzzle.gridSize == 4 || puzzle.gridSize == 9 || puzzle.gridSize == 16 || puzzle.gridSize == 25 || puzzle.gridSize == 36;
   }
 

@@ -17,14 +17,14 @@ public class HiddenSinglesAlgorithm extends SudokuAlgorithm {
   public boolean applyMethod(Puzzle puzzle, int currRow, int currCol) {
     List<Character> list;
 
-    list = checkRowAndColumn(puzzle, currRow, currCol);
+    list = findHiddenSinglesInRowCol(puzzle, currRow, currCol);
     if (list.size() == 1) {
       puzzle.cells[currRow][currCol].setValue(list.get(0));
       updateNotes(puzzle, currRow, currCol);
       return true;
     }
 
-    list = checkBlock(puzzle, currRow, currCol);
+    list = findHiddenSinglesInBlock(puzzle, currRow, currCol);
     if (list.size() == 1) {
       puzzle.cells[currRow][currCol].setValue(list.get(0));
       updateNotes(puzzle, currRow, currCol);
@@ -39,11 +39,12 @@ public class HiddenSinglesAlgorithm extends SudokuAlgorithm {
    * @param puzzle  Puzzle to be examined
    * @param currRow Row index of current cell
    * @param currCol Column index of current cell
+   * @return true list of hidden singles (can be empty)
    */
-  private List<Character> checkBlock(Puzzle puzzle, int currRow, int currCol) {
+  private List<Character> findHiddenSinglesInBlock(Puzzle puzzle, int currRow, int currCol) {
     //Find the top left square of the block to which this cell belongs
-    int blockRow = calculateBlockIndex(puzzle, currRow);
-    int blockCol = calculateBlockIndex(puzzle, currCol);
+    int blockRow = puzzle.calculateBlockIndex(currRow);
+    int blockCol = puzzle.calculateBlockIndex(currCol);
 
     List<Character> list = new ArrayList<>(puzzle.cells[currRow][currCol].possibleValues);
 
@@ -68,10 +69,10 @@ public class HiddenSinglesAlgorithm extends SudokuAlgorithm {
    * @param puzzle  Puzzle to be examined
    * @param currRow Row index of current cell
    * @param currCol Column index of current cell
-   * @return true if the list size equals one after a column or row examination
+   * @return true list of hidden singles (can be empty)
    */
   @SuppressWarnings("Duplicates")
-  private List<Character> checkRowAndColumn(Puzzle puzzle, int currRow, int currCol) {
+  private List<Character> findHiddenSinglesInRowCol(Puzzle puzzle, int currRow, int currCol) {
     List<Character> list = new ArrayList<>(puzzle.cells[currRow][currCol].possibleValues);
 
     for (int col = 0; col < puzzle.gridSize && !list.isEmpty(); col++) {
