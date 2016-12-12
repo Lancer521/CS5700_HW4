@@ -21,7 +21,8 @@ itself, but I decided to let the SudokuAlgorithm know this.  In my mind, it make
  SudokuAlgorithms are the ones that know how to manipulate and change the data in the Puzzle in meaningful ways.
 
 
-If you run the program such that it solves all 30 of the test puzzles, it will save them to src/Output/[puzzlename].txt
+
+** If you run the program such that it solves all 30 of the test puzzles, it will save them to src/Output/[puzzlename].txt **
 
 
 
@@ -29,6 +30,12 @@ Things learned in my revision:
 - Using and traversing Strings instead of Lists for the 'possibleValues' property of each cell actually MORE THAN DOUBLED the time required to solve all 30
 puzzles.  Unfortunately it took a few hours of refactoring to realize that.  Fortunately though, IntelliJ quickly reverted these uncommitted changes for me
 (yay version control).
+
 - Writing test cases actually helped me identify a few methods that weren't properly named, ie. the 'getBlockIndex' method implies that it is a simple
 getter to a property, however the method actually contains logic that figures out the top-left index of that block containing the given cell.  It is much
 more appropriate to call it 'puzzle.calculateBlockIndex'
+
+- Testing can be a bit complicated because there are methods within certain classes that are marked as private or package protected which I may still want to
+ test.  However, I don't feel like it's good practice to just make everything public for the sake of testing.  I'm not really sure what the work around is,
+ so I tried to be wise in identifying which methods would be ok to make public (few) for testing, and which methods would be ok without unit tests because
+ they are indirectly tested through other methods/algorithms.

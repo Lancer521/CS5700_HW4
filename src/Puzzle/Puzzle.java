@@ -9,93 +9,94 @@ import java.util.List;
  */
 public class Puzzle {
 
-    public static final int UNTESTED = 0;
-    public static final int SOLVED = 1;
-    public static final int UNSOLVABLE = 2;
-    public static final int BAD_PUZZLE = 3;
-    public static final int MULTIPLE_SOLUTIONS = 4;
+  public static final int UNTESTED = 0;
+  public static final int SOLVED = 1;
+  public static final int UNSOLVABLE = 2;
+  public static final int BAD_PUZZLE = 3;
+  public static final int MULTIPLE_SOLUTIONS = 4;
 
-    public int gridSize;
-    public int blockSize;
-    public List<Character> symbols;
-    public Cell cells[][];
-    public int result;
+  public int gridSize;
+  public int blockSize;
+  public List<Character> symbols;
+  public Cell cells[][];
+  public int result;
 
-    public Puzzle(int size, List<Character> symbols){
-        gridSize = size;
-        blockSize = ((Double) Math.sqrt(gridSize)).intValue();
-        this.symbols = symbols;
-        result = UNTESTED;
-        initializeCells(size);
+  public Puzzle(int size, List<Character> symbols) {
+    gridSize = size;
+    blockSize = ((Double) Math.sqrt(gridSize)).intValue();
+    this.symbols = symbols;
+    result = UNTESTED;
+    initializeCells(size);
+  }
+
+  private void initializeCells(int size) {
+    cells = new Cell[size][];
+    for (int i = 0; i < size; i++) {
+      cells[i] = new Cell[size];
+      for (int j = 0; j < size; j++) {
+        cells[i][j] = new Cell(symbols);
+      }
     }
+  }
 
-    private void initializeCells(int size){
-        cells = new Cell[size][];
-        for(int i = 0; i < size; i++){
-            cells[i] = new Cell[size];
-            for(int j = 0; j < size; j++){
-                cells[i][j] = new Cell(symbols);
-            }
-        }
+  public void printToConsole() {
+    System.out.println(gridSize);
+    for (Character c : symbols) {
+      System.out.print(c + " ");
     }
+    for (int i = 0; i < gridSize; i++) {
+      System.out.println();
+      for (int j = 0; j < gridSize; j++) {
+        System.out.print(cells[i][j].getValue() + " ");
+      }
+    }
+    System.out.print("\n\n");
+  }
 
-    public void printToConsole(){
-        System.out.println(gridSize);
-        for (Character c : symbols) {
-            System.out.print(c + " ");
-        }
-        for (int i = 0; i < gridSize; i++) {
-            System.out.println();
-            for (int j = 0; j < gridSize; j++) {
-                System.out.print(cells[i][j].getValue() + " ");
-            }
-        }
-        System.out.print("\n\n");
+  public String getPuzzleResultString() {
+    switch (result) {
+      case SOLVED:
+        return "SOLVED";
+      case MULTIPLE_SOLUTIONS:
+        return "MULTIPLE SOLUTIONS";
+      case UNSOLVABLE:
+        return "UNSOLVABLE";
+      case BAD_PUZZLE:
+        return "BAD PUZZLE";
+      default:
+        return "";
     }
+  }
 
-    public String getPuzzleResultString() {
-        switch(result){
-            case SOLVED:
-                return "SOLVED";
-            case MULTIPLE_SOLUTIONS:
-                return "MULTIPLE SOLUTIONS";
-            case UNSOLVABLE:
-                return "UNSOLVABLE";
-            case BAD_PUZZLE:
-                return "BAD PUZZLE";
-            default:
-                return "";
-        }
+  /**
+   * Compares components of a Puzzle, mainly needed for testing purposes
+   *
+   * @param puzzle Puzzle to be compared to this Puzzle
+   */
+  public boolean equals(Puzzle puzzle) {
+    if (gridSize != puzzle.gridSize || !symbols.equals(puzzle.symbols)) {
+      return false;
     }
+    for (int i = 0; i < gridSize; i++) {
+      for (int j = 0; j < gridSize; j++) {
+        if (cells[i][j].getValue() != puzzle.cells[i][j].getValue()) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
 
-    /**
-     * Compares components of a Puzzle, mainly needed for testing purposes
-     * @param puzzle Puzzle to be compared to this Puzzle
-     */
-    public boolean equals(Puzzle puzzle){
-        if(gridSize != puzzle.gridSize || !symbols.equals(puzzle.symbols)){
-            return false;
+  public boolean isFull() {
+    for (int i = 0; i < gridSize; i++) {
+      for (int j = 0; j < gridSize; j++) {
+        if (!cells[i][j].hasValue()) {
+          return false;
         }
-        for(int i = 0; i < gridSize; i++){
-            for(int j = 0; j < gridSize; j++){
-                if(cells[i][j].getValue() != puzzle.cells[i][j].getValue()){
-                    return false;
-                }
-            }
-        }
-        return true;
+      }
     }
-
-    public boolean isFull() {
-        for (int i = 0; i < gridSize; i++) {
-            for (int j = 0; j < gridSize; j++) {
-                if (!cells[i][j].hasValue()) {
-                    return false;
-                }
-            }
-        }
-        return true;
-    }
+    return true;
+  }
 
   /**
    * Return the top-most row index or left-most column index of the block containing the cell

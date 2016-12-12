@@ -59,6 +59,31 @@ public class TestSuite {
   }
 
   @Test
+  public void testPuzzleCalculateBlockIndex(){
+    Puzzle puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-4x4-0001.txt");
+    Assert.assertTrue(puzzle != null);
+    Assert.assertTrue(puzzle.calculateBlockIndex(0) == 0);
+    Assert.assertTrue(puzzle.calculateBlockIndex(1) == 0);
+    Assert.assertTrue(puzzle.calculateBlockIndex(2) == 2);
+    Assert.assertTrue(puzzle.calculateBlockIndex(3) == 2);
+
+    puzzle = PuzzleIO.getPuzzle("src/SamplePuzzles/Puzzle-9x9-0001.txt");
+    Assert.assertTrue(puzzle != null);
+    Assert.assertTrue(puzzle.calculateBlockIndex(0) == 0);
+    Assert.assertTrue(puzzle.calculateBlockIndex(1) == 0);
+    Assert.assertTrue(puzzle.calculateBlockIndex(2) == 0);
+    Assert.assertTrue(puzzle.calculateBlockIndex(3) == 3);
+    Assert.assertTrue(puzzle.calculateBlockIndex(4) == 3);
+    Assert.assertTrue(puzzle.calculateBlockIndex(5) == 3);
+    Assert.assertTrue(puzzle.calculateBlockIndex(6) == 6);
+    Assert.assertTrue(puzzle.calculateBlockIndex(7) == 6);
+    Assert.assertTrue(puzzle.calculateBlockIndex(8) == 6);
+
+    Assert.assertFalse(puzzle.calculateBlockIndex(1) == 1);
+    Assert.assertFalse(puzzle.calculateBlockIndex(5) == 6);
+  }
+
+  @Test
   public void testCellHasValue(){
     Cell cell = new Cell(new ArrayList<>());
     cell.setValue('-');
